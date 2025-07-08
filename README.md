@@ -2,15 +2,14 @@
 ## @react.micro-framework
 Proyecto personal, he creado un microframework similar a Astro en React para generar frontales y paginas web dinámicas.
 Además, voy a ir añadiendo retos y ejemplos con React para practicar más y mantenerme lo más actualizado posible con esta tecnología.
+- Framework basado en componentes (slots) ligero y flexible, muy fácil de usar y extender.
+- Navegación por páginas: enrutamiento por sistemas de archivos (generouted + react-router-dom)
+- Vistas y maquetación con Bootstrap 5.x integrado y compilado a medida (bootstrap + sass)
+- Soporte para control de estados y validación de formularios (react-hook-form)
+- Soporte para el envío de emails automáticos desde la plataforma (express + nodemailer)
+- Soporte para páginas web progresivas PWA y aplicaciones de una página SPA (bundle Vite)
+- Componentes de interfaz multimedia: imágenes, galerías, vídeos (varios componentes)
 
-> [!NOTE]
-> - Framework basado en componentes (slots) ligero y flexible, muy fácil de usar y extender.
-> - Navegación por páginas: enrutamiento por sistemas de archivos (generouted + react-router-dom)
-> - Vistas y maquetación con Bootstrap 5.x integrado y compilado a medida (bootstrap + sass)
-> - Soporte para control de estados y validación de formularios (react-hook-form)
-> - Soporte para el envío de emails automáticos desde la plataforma (express + nodemailer)
-> - Soporte para páginas web progresivas PWA y aplicaciones de una página SPA (bundle Vite)
-> - Componentes de interfaz multimedia: imágenes, galerías, vídeos (varios componentes)
 
 ### Instalación de bundle Vite con React y TypeScript
 > Instalar sin clonar este repositorio:
@@ -32,10 +31,12 @@ pnpm i bootstrap bootstrap-icons --save
 pnpm approve-builds -g
 ```
 
+
 ### Actualizar e instalar la última versión de React
 ```
 pnpm install --save react@latest react-dom@latest
 ```
+
 
 ### Instalar soporte para imágenes en Vite mediante plugins del bundle:
 ```
@@ -50,6 +51,7 @@ pnpm approve-builds -g
 ```javascript
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+
 import viteImagemin from '@vheemstra/vite-plugin-imagemin'
 import imageminMozjpeg from 'imagemin-mozjpeg'
 import imageminWebp from 'imagemin-webp'
@@ -97,6 +99,7 @@ export default defineConfig({
 }
 ```
 > Así, cada vez que modifiques **[/public/bootstrap.scss](/public/bootstrap.scss)** se generará **[/public/bootstrap-min.css](/public/bootstrap-min.css)**
+
 
 ### Configuración de alias en Vite (path absoluto para sistema de ficheros)
 > [!IMPORTANT]
