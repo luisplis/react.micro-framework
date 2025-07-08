@@ -15,12 +15,7 @@ Además, voy a ir añadiendo retos y ejemplos con React para practicar más y ma
 > Instalar sin clonar este repositorio:
 ```
 cd /PROJECTS
-pnpm create vite@latest
-```
-> - Project Name: "react.micro-framework" 
-> - Select Framework: "React" 
-> - Select Variant: TypeScript + SWC
-> - O todo en un paso: ``npm create vite@latest PYTO -- --template react-ts``
+pnpm create vite@latest PYTO --template react-ts
 ```
 cd /PROJECTS/react.micro-framework
 pnpm install
