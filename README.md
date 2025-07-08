@@ -35,7 +35,7 @@ pnpm install @vheemstra/vite-plugin-imagemin -D
 pnpm install imagemin-mozjpeg
 pnpm install imagemin-webp
 ```
-> Aseguramos que la configuración de Vite utiliza los plugins en su configuración:
+> Aseguramos que la configuración de Vite utiliza los plugins en su configuración añadiendo:
 [/vite.config.ts](/vite.config.ts) 
 ```javascript
 import viteImagemin from '@vheemstra/vite-plugin-imagemin'
@@ -45,9 +45,9 @@ import imageminWebp from 'imagemin-webp'
 export default defineConfig({
   plugins: [
     viteImagemin({ plugins: { jpg: imageminMozjpeg({quality: 70}) },
-    makeWebp: { plugins: { jpg: imageminWebp({quality: 70}) } }
+      makeWebp: { plugins: { jpg: imageminWebp({quality: 70}) } }
     })
-  ]
+  ],
 })
 ```
 
