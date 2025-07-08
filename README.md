@@ -17,10 +17,10 @@ Además, voy a ir añadiendo retos y ejemplos con React para practicar más y ma
 cd /PROJECTS
 pnpm create vite@latest
 ```
-> Project Name: "react.micro-framework" 
-> Select Framework: "React" 
-> Select Variant: TypeScript + SWC
-> ```npm create vite@latest rt-pyto -- --template react-ts```
+> - Project Name: "react.micro-framework" 
+> - Select Framework: "React" 
+> - Select Variant: TypeScript + SWC
+> -- ```npm create vite@latest rt-pyto -- --template react-ts```
 ```
 cd /PROJECTS/react.micro-framework
 pnpm install
