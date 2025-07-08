@@ -50,12 +50,9 @@ export default defineConfig({
   ],
 })
 ```
-> [!NOTE]
-> Más información en (@vite-plugin-imagemin)[https://github.com/vbenjs/vite-plugin-imagemin]
 > [!IMPORTANT]
-> Puede que necesites soporte en el servidor para estos formatos de imagen
-[/public/.htaccess]
-(/public/.htaccess)
+> Soporte en servidor web para estos formatos de imagen: copia [/public/.htaccess](/public/.htaccess) en tu directorio raíz.
+> Más información en (vite-plugin-imagemin)[https://github.com/vbenjs/vite-plugin-imagemin]
 
 
 ### Integrar Bootstrap compilado con Soporte SASS
