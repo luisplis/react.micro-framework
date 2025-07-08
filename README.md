@@ -12,19 +12,10 @@ Además, voy a ir añadiendo retos y ejemplos con React para practicar más y ma
 
 
 ### Instalación de bundle Vite con React y TypeScript
-> Instalar sin clonar este repositorio:
+> Instalar sin clonar este repositorio, cambia WWW y PYTO al gusto:
 ```
-cd /PROJECTS
+cd /WWW
 pnpm create vite@latest PYTO --template react-ts
-```
-cd /PROJECTS/react.micro-framework
-pnpm install
-pnpm install -g sass
-pnpm i bootstrap bootstrap-icons --save
-```
-> Aprobamos la mezcla de paquetes (npm fund)
-```
-pnpm approve-builds -g
 ```
 
 
@@ -60,6 +51,16 @@ export default defineConfig({
 
 
 ### Integrar Bootstrap compilado con Soporte SASS
+```
+cd /WWW/PYTO
+pnpm install
+pnpm install -g sass
+pnpm i bootstrap bootstrap-icons --save
+```
+> Aprobamos la mezcla de paquetes equivalente a ``npm fund``
+```
+pnpm approve-builds -g
+```
 > [!IMPORTANT]
 > Descargamos e importamos los estilos de Bootstrap compilado y optimizado a medida:
 [/public/bootstrap.scss](/public/bootstrap.scss)
