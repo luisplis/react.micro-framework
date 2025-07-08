@@ -55,6 +55,19 @@ export default defineConfig({
 - [/public/.htaccess](/public/.htaccess)
 > Más información en (vite-plugin-imagemin)[https://github.com/vbenjs/vite-plugin-imagemin]
 
+\ backslash 
+` backtick 
+* asterisk 
+_ underscore
+{} curly braces 
+[] square brackets 
+() parentheses 
+# hash mark 
++ plus sign 
+— minus sign (hyphen) 
+. dot 
+! exclamation mark
+
 
 ### Integrar Bootstrap compilado con Soporte SASS
 ```
