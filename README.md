@@ -12,37 +12,37 @@ Además, voy a ir añadiendo retos y ejemplos con React para practicar más y ma
 > - Soporte para páginas web progresivas PWA y aplicaciones de una página SPA (bundle Vite)
 > - Componentes de interfaz multimedia: imágenes, galerías, vídeos (varios componentes)
 
-### Instalación desde cero 
+### Instalación de Vite + React
 Instalar sin clonar este repositorio:
 ```
 cd /PROJECTS
 pnpm create vite@latest
-// Project Name: "react.micro-framework" 
-// Select Framework: "React" 
-// Select Variant: TypeScript + SWC
+```
+> Project Name: "react.micro-framework" 
+> Select Framework: "React" 
+> Select Variant: TypeScript + SWC
+```
 cd /PROJECTS/react.micro-framework
 pnpm install
 pnpm install -g sass
 pnpm i bootstrap bootstrap-icons --save
-// Now you have sass with bootstrap and bs-icons
+```
+Aprobamos la mezcla de paquetes (npm fund)
+```
 pnpm approve-builds -g
-// It is required to merge packages
 ```
 
-### Actualizar o instalar la última versión de React
+### Actualizar e instalar la última versión de React
 ```
 pnpm install --save react@latest react-dom@latest
 ```
 
-### Bootstrap compilado con Soporte SASS en VSCode
+### Integrar Bootstrap compilado con Soporte SASS
 > [!IMPORTANT]
 > Descargamos e importamos los estilos de Bootstrap compilado y optimizado a medida:
-[/src/styles.scss](/src/styles.scss)
+[/public/bootstrap.scss](/public/bootstrap.scss)
 ```
 @import "bootstrap-icons/font/bootstrap-icons.min.css";
-
-$primary:   #0077FF; 
-$secondary: #FF005A;
 
 // Customize bootstrap
 
@@ -50,21 +50,11 @@ $secondary: #FF005A;
 
 // Customize styles
 
-:root {
-    // BS 4 compatibility (_root.scss)
-    @each $bp, $value in $grid-breakpoints {
-      --breakpoint-#{$bp}: #{$value};
-    }
-}
-body {
-    font-size: 13pt;
-    font-display: swap;
-    overflow-x: hidden;
-}
+:root { } body  { } /* etc */
 ```
 > [!IMPORTANT]
-> Instalar extensión “Live Sass Compiler” en VSCode y configurarla para compilar en local:
-[/.vscode/settings.json](/.vscode/settings.json)
+> Instalamos la extensión “Live Sass Compiler” en VSCode y lo configuramos para compilar en local:
+> Instala en VSCode [Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass) y configuraló así: [/.vscode/settings.json](/.vscode/settings.json)
 ```
 {
 "liveSassCompile.settings.formats":[
@@ -77,5 +67,42 @@ body {
 "liveSassCompile.settings.generateMap": false, 
 "liveSassCompile.settings.watchOnLaunch": true
 }
+```
+> Así, cada vez que modifiques **[/public/bootstrap.scss](/public/bootstrap.scss)** se generará **[/public/bootstrap-min.css](/public/bootstrap-min.css)**
+
+### Configuración de alias en Vite (path absoluto para sistema de ficheros)
+> [!IMPORTANT]
+> [/vite.config.ts](/vite.config.ts)
+```javascript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import * as path from 'path'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+    slots: [{ find: '@slots', replacement: path.resolve(__dirname, 'slots') }],
+  },
+})
+```
+> Así podemos importar o referenciar rutas (paths) usando su alias a modo de ruta absoluta y desde cualquier lugar, por ejemplo:
+```javascript
+/*
+** /App.tsx
+*/
+import Slot from '@/slots/Slot'
+
+export default function App() {
+  return (<>
+      <Slot userName="Luisplis"> ALLinONE </Slot>
+  </>)
+}
+```
+> [!NOTE]
+> Si usas la versión o plantilla de Vite sin TypeScript, la configuración es ligeramente diferente:
+```
+alias: { '@': path.resolve(__dirname, './src'),...}
 ```
 
