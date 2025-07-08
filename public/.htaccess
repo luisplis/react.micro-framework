@@ -1,0 +1,29 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # If browser supports WebP images...
+  RewriteCond %{HTTP_ACCEPT} image/webp
+
+  # ...and WebP replacement image exists in the same directory...
+  RewriteCond %{REQUEST_FILENAME}.webp -f
+
+  # ...serve WebP image instead of jpeg/png/gif.
+  RewriteRule (.+)\.(jpe?g|png|gif)$ $1.webp [T=image/webp,E=REQUEST_image]
+
+  # Same for AVIF
+  RewriteCond %{HTTP_ACCEPT} image/avif
+  RewriteCond %{REQUEST_FILENAME}.avif -f
+  RewriteRule (.+)\.(jpe?g|png)$ $1.avif [T=image/avif,E=REQUEST_image]
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Tell the browser the response (for this image) varies
+  # depending on the "Accept" request header.
+  Header append Vary Accept env=REQUEST_image
+</IfModule>
+
+<IfModule mod_mime.c>
+  # Add file type MIME support
+  AddType image/webp .webp
+  AddType image/avif .avif
+</IfModule>

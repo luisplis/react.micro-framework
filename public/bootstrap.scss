@@ -1,0 +1,906 @@
+/* 
+** BS VARIABLES -- Customize it!
+*/
+@import url('https://fonts.googleapis.com/css2?family=Winky+Sans&family=Raleway&family=REM&display=swap');
+ 
+$font-text:    'Winky Sans', sans-serif;
+$font-title:   'Raleway', sans-serif;
+$font-display: 'REM', sans-serif;
+$font-icon:    'bootstrap-icons';
+$font-size:     12.5pt; 
+
+$primary:   #1A3Fff;
+$info:      #0080ff;
+$secondary: #ff50aa;
+$custom:    #cef50a;
+$success:   #80ff00;
+$white:     #FFFFFF;
+$black:     #000000;
+$light:     #ececec;
+$dark:      #2f2f2f;
+
+$min-contrast-ratio:   3 !default;
+
+$link-color:        $black;
+$link-decoration:   none;
+$link-hover-color:  $primary;
+
+$body-bg:     #F2F2F2 !default;
+$body-color:  #4C4C4C !default;
+
+$lead-font-size: 1rem * 1.55 !default;
+$headings-line-height: 1.33em !default;
+
+$font-family-sans-serif: $font-text !default;
+$nav-tabs-border-radius: 0.3em !default;
+$progress-height: 3px !default;
+
+$enable-shadows: true !default;
+$enable-gradients: true !default;
+$enable-negative-margins: true !default;
+$enable-cssgrid: true !default;
+$viewport-all: true !default;
+
+$form-check-input-checked-color: $body-color !default;
+
+$h1-font-size: 2.55rem !default;
+$h2-font-size: 1.85rem !default;
+$h3-font-size: 1.45rem !default;
+$h4-font-size: 1.15rem !default;
+$h5-font-size: 1.05rem !default;
+$h6-font-size: 1rem !default;
+
+// Extend BS spacers: margin, padding, gap
+$spacers: (
+    0: 0,
+    1: (1rem * 0.3),
+    2: (1rem * 0.7),
+    3: (1rem * 1.5),
+    4: (1rem * 3),
+    5: (1rem * 5),
+    6: (1rem * 9),
+) !default;
+
+// Extend BS breakpoints: w, h, vw, vh
+$sizes: (
+    10: 10%,
+    15: 15%,
+    25: 25%,
+    30: 30%,
+    45: 45%,
+    50: 50%,
+    65: 65%,
+    70: 70%,
+    75: 75%,
+    85: 85%
+) !default;
+
+$scales: (
+    10: 0.10,
+    15: 0.15,
+    25: 0.25,
+    45: 0.45,
+    50: 0.50,
+    65: 0.65,
+    75: 0.75,
+    85: 0.85
+) !default;
+
+// Extend BS font sizes: fs-1, display-2, h3
+$display-font-sizes: (
+    1: 7.44rem,
+    2: 5.22rem,
+    3: 2.88rem,
+    4: 1.55rem,
+    5: 1.11rem,
+    6: 0.88rem,
+) !default;
+
+/*
+** BS DEFAULTS
+*/
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+@import "../node_modules/bootstrap/scss/maps";
+
+:root {
+    // BS-4 compatibility var(--breakpoint-xy) -- BS-5 var(--bs-breakpoint-xy)
+    @each $bp, $value in $grid-breakpoints { --breakpoint-#{$bp}: #{$value}; }
+}
+
+// Extend BS colors and text styles
+$custom: mix(complement($primary), invert($secondary), 50%) !default;
+
+$transparent: transparent !default;
+
+$colorize: (
+    "custom":      $custom,
+    "black":       $black,
+    "white":       $white,
+    "transparent": $transparent
+) !default;
+
+
+$colors: map-merge($theme-colors, $colorize);
+$theme-colors: map-merge($theme-colors, $colorize);
+$theme-colors-text: map-merge($theme-colors, $colorize);
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+$utilities-text: map-merge($theme-colors, $utilities-text);
+$utilities-text-colors: map-loop($utilities-text, rgba-css-var, "$key", "text");
+$utilities-border: map-merge($utilities-colors, $theme-colors-rgb);
+$utilities-border-colors: map-loop($utilities-border, rgba-css-var, "$key", "border");
+$utilities-bg: map-merge($theme-colors, $utilities-bg);
+$utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, "$key", "bg");
+
+/*
+** BS EXTENSED
+*/
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/mixins/banner";
+@import "../node_modules/bootstrap/scss/utilities";
+
+/*
+** GoTo: smooth scroll to anchor 
+*/
+:global(html) { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { :global(html) { scroll-behavior: auto; } }
+
+html { scroll-padding-top: 80px; }
+@include media-breakpoint-up(lg){ html { scroll-padding-top: 120px; } }
+
+/*
+** Brs: responsive breaking-returns
+*/
+@include media-breakpoint-down(xl) { .br-lg br { display: none !important; } }
+@include media-breakpoint-down(lg) { .br-md br { display: none !important; } }
+@include media-breakpoint-down(md) { .br-sm br { display: none !important; } }
+@include media-breakpoint-up(xl) { .br-alt-lg br { display: none !important; } }
+@include media-breakpoint-up(lg){ .br-alt-md br { display: none !important; } }
+@include media-breakpoint-up(md){ .br-alt-sm br { display: none !important; } }
+
+/*
+** Responsive width and height: "w-md-50 w-lg-70 h-50" ++ @bootstrap-extended
+*/
+$wsizes: ();
+$hsizes: ();
+@each $i,$size in $sizes {
+    $wsizes: map-merge($wsizes, ($i: #{$i}vw));
+    $hsizes: map-merge($hsizes, ($i: #{$i}vh));
+}
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "bg-opacity": map-merge(
+            map-get($utilities, "bg-opacity"),
+            (
+                values: map-merge( map-get(map-get($utilities, "bg-opacity"), "values"), 
+                    $scales
+                ),
+            ),
+        ),
+        "width": map-merge(
+            map-get($utilities, "width"),
+            (
+                values: map-merge( map-get(map-get($utilities, "width"), "values"), ($sizes) ),
+                responsive: true,
+            ),
+        ),
+        "max-width": map-merge(
+            map-get($utilities, "max-width"),
+            (
+                values: map-merge( map-get(map-get($utilities, "max-width"), "values"), ($sizes) ),
+                responsive: $viewport-all,
+            ),
+        ),
+        "viewport-width": map-merge(
+            map-get($utilities, "viewport-width"),
+            (
+                values: map-merge( map-get(map-get($utilities, "viewport-width"), "values"), ($wsizes) ),
+                responsive: $viewport-all,
+            ),
+        ),
+        "min-viewport-width": map-merge(
+            map-get($utilities, "min-viewport-width"),
+            (
+                values: map-merge( map-get(map-get($utilities, "min-viewport-width"), "values"), ($wsizes) ),
+                responsive: $viewport-all,
+            ),
+        ),
+        "height": map-merge(
+            map-get($utilities, "height"),
+            (
+                values: map-merge( map-get(map-get($utilities, "height"), "values"), ($sizes) ),
+                responsive: true,
+            ),
+        ),
+        "max-height": map-merge(
+            map-get($utilities, "max-height"),
+            (
+                values: map-merge( map-get(map-get($utilities, "max-height"), "values"), ($sizes) ),
+                responsive: $viewport-all,
+            ),
+        ),
+        "viewport-height": map-merge(
+            map-get($utilities, "viewport-height"),
+            (
+                values: map-merge( map-get(map-get($utilities, "viewport-height"), "values"), ($hsizes) ),
+                responsive: $viewport-all,
+            ),
+        ),
+        "min-viewport-height": map-merge(
+            map-get($utilities, "min-viewport-height"),
+            (
+                values: map-merge( map-get(map-get($utilities, "min-viewport-height"), "values"), ($hsizes) ),
+                responsive: $viewport-all,
+            ),
+        ),
+        "position-relative": ( responsive: true, property: position, class: position, values: relative
+        ),
+        "position-absolute": ( responsive: true, property: position, class: position, values: absolute
+        ),
+        "start": map-merge(
+            map-get($utilities, "start"),
+            ( responsive: true )
+        ),
+        "top": map-merge(
+            map-get($utilities, "top"),
+            ( responsive: true )
+        ),
+        "end": map-merge(
+            map-get($utilities, "end"),
+            ( responsive: true )
+        ),
+        "translate-middle": map-merge(
+            map-get($utilities, "translate-middle"),
+            ( responsive: true ) 
+        )
+    )
+);
+
+// Dark mode
+$custom-colors-text-dark: ("custom-color": #e1d2f2);
+$custom-colors-bg-subtle-dark: ("custom-color": #8951fa);
+$custom-colors-border-subtle-dark: ("custom-color": #e1d2f2);
+
+$theme-colors-text-dark: map-merge($theme-colors-text-dark, $custom-colors-text-dark);
+$theme-colors-bg-subtle-dark: map-merge($theme-colors-bg-subtle-dark, $custom-colors-bg-subtle-dark);
+$theme-colors-border-subtle-dark: map-merge($theme-colors-border-subtle-dark, $custom-colors-border-subtle-dark);
+
+/*
+** Extra Offcanvas contents (footer)
+*/
+@include media-breakpoint-up(xl){ .navbar-expand-xl .offcanvas .offcanvas-footer { display: none; } }
+
+// BS CONFIGURATION
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// BS ALL COMPONENTS
+@import "../node_modules/bootstrap/scss/root";
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/type";
+@import "../node_modules/bootstrap/scss/images";
+@import "../node_modules/bootstrap/scss/containers";
+@import "../node_modules/bootstrap/scss/grid";
+@import "../node_modules/bootstrap/scss/tables";
+@import "../node_modules/bootstrap/scss/forms";
+@import "../node_modules/bootstrap/scss/buttons";
+@import "../node_modules/bootstrap/scss/transitions";
+@import "../node_modules/bootstrap/scss/dropdown";
+@import "../node_modules/bootstrap/scss/button-group";
+@import "../node_modules/bootstrap/scss/nav";
+@import "../node_modules/bootstrap/scss/navbar";
+@import "../node_modules/bootstrap/scss/card";
+@import "../node_modules/bootstrap/scss/accordion";
+@import "../node_modules/bootstrap/scss/breadcrumb";
+@import "../node_modules/bootstrap/scss/pagination";
+@import "../node_modules/bootstrap/scss/badge";
+@import "../node_modules/bootstrap/scss/alert";
+@import "../node_modules/bootstrap/scss/progress";
+@import "../node_modules/bootstrap/scss/list-group";
+@import "../node_modules/bootstrap/scss/close";
+@import "../node_modules/bootstrap/scss/toasts";
+@import "../node_modules/bootstrap/scss/modal";
+@import "../node_modules/bootstrap/scss/tooltip";
+@import "../node_modules/bootstrap/scss/popover";
+@import "../node_modules/bootstrap/scss/carousel";
+@import "../node_modules/bootstrap/scss/spinners";
+@import "../node_modules/bootstrap/scss/offcanvas";
+@import "../node_modules/bootstrap/scss/placeholders";
+
+// BS API HELPERS + UTILITIES
+@import "../node_modules/bootstrap/scss/helpers";
+@import "../node_modules/bootstrap/scss/utilities/api";
+
+/*
+** RESET STYLES -- all in projects
+*/
+body {
+    font-display: swap;
+    overflow-x: hidden;
+}
+header, main, footer {
+    min-width: 345px;
+}
+header nav.navbar { background-image: none; }
+
+main
+{
+    font-size: $font-size;
+    min-height: 85vh;
+    a, .link { text-decoration: $link-decoration; }
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 { font-family: $font-title; font-weight: $font-weight-normal; }
+h1, .h1, h3, .h3 { font-family: $font-display; font-weight: $font-weight-bolder; }
+
+.text     { font-family: $font-text !important; }
+.title    { font-family: $font-title !important; }
+.display  { font-family: $font-display !important; }
+.code     { font-family: $font-family-monospace !important; }
+
+.icon {
+    font-family: $font-icon !important;
+    &:after, &:before {
+        align-self: center !important;
+        vertical-align: middle !important;
+    }
+}
+.icon-link { align-items: stretch; }
+
+.beta { outline: 2px dotted shade-color($secondary, 15%); background-color: tint-color($primary, 85%); }
+.lead   { font-family: $font-title; font-size: 1.15rem; line-height: 1.45em; }
+.text-condensed { letter-spacing: 0.05em; }
+.text-spaced    { letter-spacing: 0.1em; }
+.text-balance   { text-wrap: balance; }
+.text-shadow    { text-shadow: 0 0 0.05em $black; }
+.text-justify   { text-align: justify; }
+.em     { width: 1em; height: 1em;  line-height: 1em; }
+.rem    { width: 1rem; height: 1rem; line-height: 1rem; }
+
+.hover {
+    cursor: inherit;
+    transition: all 0.2s ease-in-out;
+    &:hover { cursor: pointer !important; }
+}
+
+.badge   { font-family: $font-display; font-weight: normal; line-height: 1em; }
+.favicon { max-width: 64px; min-height: 32px; }
+.popover { min-width: 320px; max-width: 100%; }
+
+p, blockquote, ol li, ul li, h1, h2, h3, h4, h5, .badge {
+    &:hover {
+        cursor: default;
+    }
+}
+
+blockquote, .blockquote {
+    font-size: 1em;
+    line-height: 1.45em;
+    font-family: $font-text;
+    position: relative;
+    padding: 0.7em 1em 0.7em 1em;
+    color: $black;
+    border: 1px solid $white;
+    background-color: tint-color($light, 20%);
+    box-shadow: 0 0 13px -5px rgba(0, 0, 0, 0.5);
+    border-radius: 0.33em;
+    box-shadow: none;
+    &:before {
+        font-family: $font-display;
+        color: shade-color($light, 20%);
+        position: absolute;
+        height: 100%;
+        font-size: 3em;
+        line-height: 0;
+        top: 0.3em;
+        left: -0.15em;
+        content: "\201C";
+    }
+    &:after {
+        font-family: $font-display;
+        color: shade-color($light, 20%);
+        position: absolute;
+        height: 100%;
+        font-size: 3em;
+        float: right;
+        line-height: 0;
+        right: -0.15em;
+        top: calc(100% + 0.15em);
+        content: "\201D";
+    }
+    >cite:before {
+        content: "\2013";
+    }
+}
+.blockquote {
+    color: $black;
+    border: 1px solid rgba($primary, 0.44);
+    &:before, &:after { color: rgba($primary, 0.88); }
+}
+
+/* Listas */
+.list-group {
+    .list-group-item {
+        background-color: transparent;
+    }
+}
+
+ul.list, ol.list {
+    li {
+        line-height: 1.3em;
+        &:not(:last-child){ padding-bottom: 0.3em; }
+    }
+}
+ul.list { list-style: disc outside; }
+
+ul.list-alt, ol.list-alt {
+    list-style: none outside;
+    li {
+        position: relative;
+        line-height: 1.5em;
+        &:before /* @customize-it */
+        {
+            position: absolute; top: 0; left: -1.5em;
+            font-family: $font-icon; font-size: 1em;
+            content: "\f26b";
+        }
+        &:not(:last-child) {
+            padding-bottom: 0;
+        }
+    }
+}
+ul.list-chevron, ol.list-chevron {
+    list-style: none outside;
+    padding-left: 1rem;
+    margin-bottom: 0px;
+    > li {
+        position: relative;
+        line-height: 1.5em;
+        margin-bottom: .5em;
+        &:before /* @customize-it */
+        {
+            position: absolute; top: -2px; left: -1.2em;
+            font-family: $font-icon; font-size: 1em;
+            content: "\F285";
+        }
+        &:not(:last-child) {
+            padding-bottom: 0;
+        }
+    }
+}
+
+/* Efecto sonar */
+.sonar {
+    animation: sonar 1.5s infinite;
+}
+@keyframes sonar {
+    0%   { border-radius: 0.2em; box-shadow: 0 0 0 0 rgba($primary, 0.2); }
+    100% { border-radius: 0.5em; box-shadow: 0 0 0 1.5em transparent; }
+}
+
+/* Masonry */
+
+.masonry {
+  .row {
+    .item {
+      display: block;
+      width: 100%;
+      .it, img { width: 100%; }
+    }
+  }
+}
+
+/*
+** PositionFixed responsive: "position-lg-fixed" ++ @bootstrap-extended
+*/
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    .position#{$infix}-fixed {
+      position: fixed !important;
+    }
+    .position#{$infix}-sticky{
+      position: sticky !important;
+    }
+  }
+}
+/*
+** Overlay responsive: "overlay overlay-md-top" ++ @bootstrap-extended 
+*/
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+        .overlay#{$infix} {
+            position: absolute !important;
+            width: 100%; height: auto;
+            top: 50% !important; left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            transform-style: preserve-3d;
+        }
+        .overlay#{$infix}-top {
+            position: absolute !important;
+            width: 100% ; height: auto;
+            top: 0% !important; bottom: auto !important; left: 50% !important;
+            transform: translate(-50%,-0%) !important;
+            transform-style: preserve-3d;
+        }
+        .overlay#{$infix}-bottom {
+            position: absolute !important;
+            width: 100%; height: auto;
+            bottom: 0% !important; top: auto !important; left: 50% !important;
+            transform: translate(-50%,0%) !important;
+            transform-style: preserve-3d;
+        }
+    }
+}
+
+/*
+** CUSTOM STYLES -- Customize it!
+*/
+
+#header {
+    transition: all 500ms ease-in-out ;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
+    .alias { font-family: $font-display; font-size: 1.6rem; font-weight: 300; color: $black; }
+    .link.link-info { color: shade-color($info, 20%) !important; }
+    .link.link-success { color: shade-color($success, 40%) !important; }
+    .link.link-social {
+        transition: all 200ms ease-in-out ;
+    }
+    .branding {
+        margin: 1rem;
+        margin-left: 0;
+        font-size: 1rem;
+        background-image: url('/logo-black.svg'); width: 77px; height: 88px; background-size: cover;
+        transition: all 300ms ease-in-out;
+        min-width: 77px;
+        .link {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            color: $black;
+        }
+        &:hover a.link { color: $primary; }
+        .display { font-size: 1.15rem; }
+        .title { padding: 0 0.05em; font-size: 0.8rem; text-shadow: 0em 0em 0.3em -0.15em $white; }
+    }
+    .branding-alt {
+        display: block;
+        margin: 0 0.75rem;
+        background-image: url('/logo-white.svg'); 
+        width: 124px; height: 100px; background-size: cover;
+        line-height: 0;
+        color: $light;
+        &:hover { 
+            color: $custom;
+        }
+    }
+    .navbar-toggler {
+        padding: 0;
+        &:focus { box-shadow: none; }
+        .nav-link { 
+            font-size: 2em;  
+            color: $black; 
+            &:hover, &.active {
+                color: $primary;
+            }
+        }
+    }
+    .link.link-social {
+        background-color: rgba($white, 0.85);
+        &:hover, &.active {
+            background-color: $white;
+        }
+    }
+    .offcanvas-header { 
+        padding-bottom: 0;
+    }
+    .offcanvas {
+        .nav-item .nav-link {
+            font-size: 1.05rem;
+            font-family: $font-display;
+            text-transform: uppercase;
+            line-height: 1.45rem;
+            color: $black;
+            &.active {
+                color: shade-color($primary, 20%);
+            }
+            &:hover {
+                color: $primary;
+            }
+            transition: all 300ms ease-in-out;
+        }
+        &.show {
+            .nav-item .nav-link {
+                color: $white;
+            }
+        }
+        .dropdown-menu {
+            margin-top: -3px;
+            background-color: shade-color($white, 7%);
+            .nav-link {
+                font-size: 1rem;
+                font-family: $font-text;
+                font-weight: normal;
+                text-transform: none;
+                line-height: 1.2rem;
+                padding-left: 1em;
+                color: $black;
+                &.active {
+                    color: shade-color($primary, 50%);
+                    background-color: $white;
+                }
+                &:hover {
+                    color: tint-color($primary, 50%);
+                    background-color: $white;
+                }
+            }
+        }
+    }
+    &.active {
+        transition: all 500ms ease-in-out;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8));
+        .alias { font-size: 1.2rem; color: $white; }
+        .link { color: $white; }
+        .link.link-info { color: $info !important; }
+        .link.link-success { color: $success !important; }
+        .link.link-social {
+            background-color: $transparent;
+            &:hover {  background-color: $dark; }
+        }
+        .branding {
+            padding-bottom: 13px;
+            background-image: url('/logo-white.svg'); 
+            width: 46px; height: 50px; 
+            background-size: cover;
+            line-height: 0;
+            color: $light;
+            &:hover {
+                color: $custom;
+            }
+            .display { font-size: 0.5rem; }
+            .lead { display: none; }
+            .title {
+                font-size: 0.45rem;
+                padding: 0 0.2em;
+                text-shadow: 0em 0em 0.3em -0.15em $black;
+            }
+        }
+        @include media-breakpoint-down(lg) {
+            .branding {
+                margin: 0.4rem -1.2rem;
+                width: 36px; height: 38px; 
+                box-sizing: content-box;
+            }
+        }
+        .navbar-toggler {
+            .nav-link {
+                color: $white;
+                &:hover, &.active {
+                    color: $custom;
+                }
+            }
+        }
+        .offcanvas {
+            .nav-item .nav-link {
+                color: $white;
+                &.active {
+                    color: tint-color($primary, 50%);
+                }
+                &:hover {
+                    color: $custom;
+                }
+                transition: all 300ms ease-in-out;
+            }
+        }
+    }
+    @include media-breakpoint-down(lg) {
+        .offcanvas {
+            background-color: tint-color($black, 10%);
+            .navbar-nav {
+                .nav-item {
+                    border-bottom: 1px solid tint-color($black, 25%);
+                    .nav-link {
+                        font-size: 1.05rem;
+                        font-weight: normal;
+                        padding: 0.75em 1em;
+                        &.active { color: $secondary; }
+                        &:hover  { color: $custom; }
+                    }
+                }
+                .dropdown-menu {
+                    box-shadow: none;
+                    .nav-link {
+                        font-size: 1rem;
+                        padding-left: 1em;
+                        color: shade-color($white, 20%);
+                        background-color: tint-color($black, 10%);
+                        &.active { color: tint-color($secondary, 30%); }
+                        &:hover  { color: tint-color($custom, 30%); }
+                    }
+                }
+                .dropdown-menu .nav-item:not(:last-child) .nav-link {
+                    border-bottom: 1px solid shade-color($black, 10%);
+                }
+            }
+            .link.link-social {
+                background-color: transparent;
+                &:hover, &.active {
+                    background-color: black;
+                }
+            }
+        }
+    }
+}
+
+#main {
+    &.main {
+        padding-top: 122px; /* default layer */
+    }
+    .main {
+        padding-top: 88px; /* custom layer */
+        outline: 2px solid cyan;
+    }
+}
+
+#footer {
+    color: $light;
+    background: tint-color($black, 10%);
+    #goto {
+        .link {
+            color: $white;
+            background-color: $black;
+            &:hover {
+                color: $custom;
+            }
+        }
+        transition: all 500ms ease-in-out ;
+        opacity: 0;
+        &.active { opacity: 1; }
+    }
+    .link, 
+    .btn-link {
+        color: shade-color($white, 30%);
+        &.active {
+            color: $white;
+        }
+        &:hover:not(.active) {
+            color: $custom;
+        }
+    }
+}
+.icon-link-hover-alt:hover>.bi, .icon-link-hover-alt:focus-visible>.bi {
+    transform: var(--bs-icon-link-transform, translate3d(-0.15em, 0, 0));
+}
+.icon-link-hover-up:hover>.bi, .icon-link-hover-up:focus-visible>.bi {
+    transform: var(--bs-icon-link-transform, translate3d(0, -0.15em, 0));
+}
+.icon-link-hover-down:hover>.bi, .icon-link-hover-down:focus-visible>.bi {
+    transform: var(--bs-icon-link-transform, translate3d(0, 0.15em, 0));
+}
+
+#history {
+    .list-group-item.actived {
+        background-color: var(--bs-white) !important;
+        border: 1px solid var(--bs-primary) !important;
+    }
+    .list-group-item {
+        margin-bottom: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(var(--bs-black-rgb), 0.10);
+        background-color: rgba(var(--bs-body-bg-rgb), 0.93);
+        .list-group-item-action {
+            width: auto;
+            color: var(--bs-black);
+            &:hover, &.active {
+                color: var(--bs-primary);
+            }
+        }
+    }
+}
+#content {
+    .article {
+        background-color: rgba(var(--bs-body-bg-rgb), 0.95);
+        border: 1px solid var(--bs-white) !important;
+    }
+    .article.actived {
+        background-color: var(--bs-white) !important;
+        border: 1px solid var(--bs-primary) !important;
+    }
+}
+
+.card.card-body {
+    transition: all 0.3s ease-in-out;
+    .card-title {
+        margin-top: 0.85rem;
+        h3 {
+            font-family: $font-display;
+            font-weight: normal;
+            margin-bottom: 0.5rem;
+        }
+    }
+    .card-image {
+        overflow: hidden;
+        img {
+            transition: all 0.2s ease-in-out;
+            transform: scale(1);
+        }
+        position: relative;
+        &::after {
+            content: ''; display:block;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            box-shadow: inset 0px 0px 30px rgba($black, 0.3);
+            outline: 1px solid $white;
+        }
+    }
+    &:hover {
+        .card-image > img {
+            transform: scale(1.2);
+        }
+        .card-image::after {
+            box-shadow: inset 0px 0px 30px rgba($primary, 0.7);
+            outline: 1px solid $primary;
+        }
+    }
+}
+
+@include color-mode(dark) {
+    .card.card-body {
+        color: $light !important;
+        background-color: $dark !important;
+    }
+    .card.card-body.bg-white {
+        background-color: $black !important;
+    }
+    #history .list-group-item.actived {
+        background-color: $black !important;
+    }
+    #content .article.actived {
+        background-color: $black !important;
+    }
+    blockquote, .blockquote {
+        color: $light;
+        background-color: $dark;
+        &::after, &::before {
+            color: $white;
+        }
+    }
+    .link-black {
+        color: $light !important;
+        &:hover {
+            color: $white !important;
+        }
+    }
+    .text-black { color: $white !important; }
+    .text-dark { color: $light !important; }
+    .text-light { color: $dark !important; }
+    .text-white { color: $black !important; }
+    .bg-black { background-color: $white !important; }
+    .bg-dark { background-color: $light !important; }
+    .bg-light { background-color: $dark !important; }
+    .bg-white { background-color: $black !important;}
+    .list-group-item-action {
+        color: $light !important;
+        &:hover, &.active {
+            color: $primary !important;
+            background-color: transparent !important;
+        }
+    }
+    .badge.bg-secondary {
+        color: $black; background-color: $custom !important;
+    }
+}
+/*
+.position-relative .stretched-layer { transition: all 0.5s ease-in-out; transform: translateY(0); }
+.position-relative:hover .stretched-hover { transition: all 0.2s ease-in-out; color: $primary; }
+.position-relative:hover .stretched-layer { transition: all 0.2s ease-in-out; transform: translateY(-0.3em); }
+*/
