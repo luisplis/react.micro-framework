@@ -49,16 +49,12 @@ pnpm approve-builds -g
 > Aseguramos que la configuración de Vite utiliza los plugins en su configuración:
 [/vite.config.ts](/vite.config.ts) 
 ```javascript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-
 import viteImagemin from '@vheemstra/vite-plugin-imagemin'
 import imageminMozjpeg from 'imagemin-mozjpeg'
 import imageminWebp from 'imagemin-webp'
 
 export default defineConfig({
   plugins: [
-    react(),
     viteImagemin({ plugins: { jpg: imageminMozjpeg({quality: 70}) },
     makeWebp: { plugins: { jpg: imageminWebp({quality: 70}) } }
     })
@@ -103,18 +99,14 @@ export default defineConfig({
 
 ### Configuración de alias en Vite (path absoluto para sistema de ficheros)
 > [!IMPORTANT]
-> [/vite.config.ts](/vite.config.ts)
+> Añade las siguientes líneas de configuración y otras que te sean necesarias para tu aplicación:
+[/vite.config.ts](/vite.config.ts)
 ```javascript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import * as path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
-    slots: [{ find: '@slots', replacement: path.resolve(__dirname, 'slots') }],
   },
 })
 ```
@@ -133,7 +125,11 @@ export default function App() {
 ```
 > [!NOTE]
 > Si usas la versión o plantilla de Vite sin TypeScript, la configuración es ligeramente diferente:
-```
-alias: { '@': path.resolve(__dirname, './src'),...}
+```javascript
+export default defineConfig({
+  resolve: {
+    alias: { '@': path.resolve(__dirname, './src'),...}
+  },
+})
 ```
 
