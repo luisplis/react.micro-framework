@@ -37,6 +37,31 @@ pnpm approve-builds -g
 pnpm install --save react@latest react-dom@latest
 ```
 
+### Instalar soporte para imágenes en Vite mediante plugins del bundle:
+```
+pnpm install @vheemstra/vite-plugin-imagemin -D
+pnpm install imagemin-mozjpeg
+pnpm install imagemin-webp
+```
+Aseguramos que la configuración de Vite utiliza los plugins:
+```
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import viteImagemin from '@vheemstra/vite-plugin-imagemin'
+import imageminMozjpeg from 'imagemin-mozjpeg'
+import imageminWebp from 'imagemin-webp'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    viteImagemin({ plugins: { jpg: imageminMozjpeg({quality: 70}) },
+    makeWebp: { plugins: { jpg: imageminWebp({quality: 70}) } }
+    })
+  ]
+})
+```
+
+
 ### Integrar Bootstrap compilado con Soporte SASS
 > [!IMPORTANT]
 > Descargamos e importamos los estilos de Bootstrap compilado y optimizado a medida:
