@@ -137,7 +137,8 @@ export default defineConfig({
 ### Rutas de navegación automáticas
 > Routing automático basado en sistema de ficheros que usa Vite usando los paquetes "Genroute" y “React Router Dom”:
 ```
-pnpm install @generouted/react-router react-router-dom
+pnpm install @generouted/react-router
+pnpm install react-router-dom
 ```
 > Configuración del sistema de rutas basado en directorios y ficheros
 [/vite.config.ts](/vite.config.ts)
