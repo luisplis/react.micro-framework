@@ -133,3 +133,44 @@ export default defineConfig({
 })
 ```
 
+
+### Rutas de navegación automáticas
+> Routing automático basado en sistema de ficheros que usa Vite usando los paquetes "Genroute" y “React Router Dom”:
+```
+pnpm install @generouted/react-router react-router-dom
+```
+> Configuración del sistema de rutas basado en directorios y ficheros
+[/vite.config.ts](/vite.config.ts)
+```javascript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import generouted from '@generouted/react-router/plugin'
+
+export default defineConfig({ plugins: [react(), generouted()] })
+```
+[/src/main.tsx](/src/main.tsx)
+```javascript
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+
+import { Routes } from '@generouted/react-router'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Routes />
+  </StrictMode>,
+)
+```
+[/src/pages/index.tsx](/src/pages/index.tsx)
+```javascript
+export default function index() {
+  return <h1>HomePage Index ¡routing directory /pages file based default!</h1>
+}
+```
+> [!NOTE]
+> Podemos crear rutas dinámicas, recorrerlas para poner enlaces, navegar por jerarquías, cargar dinámicamente modales y crear layouts diferentes, todo en la documentación:
+> [https://github.com/oedotme/generouted]
+ 
+
+BLA BLA BLA
+
