@@ -17,7 +17,8 @@ Además, voy a ir añadiendo retos y ejemplos con React para practicar más y ma
 cd /WWW
 pnpm create vite@latest PYTO --template react-ts
 ```
-
+> [!NOTE]
+> (Documentación de Vite)[https://es.vite.dev/config/]
 
 ## Actualizar e instalar la última versión de React
 ```
@@ -38,7 +39,7 @@ pnpm install --save
 pnpm i vite-plugin-imagemin -D
 ```
 > Aseguramos que la configuración de Vite utiliza los plugins en su configuración añadiendo:
-[/vite.config.ts](/vite.config.ts) 
++ [/vite.config.ts](/vite.config.ts) 
 ```javascript
 import viteImagemin from '@vheemstra/vite-plugin-imagemin'
 import imageminMozjpeg from 'imagemin-mozjpeg'
@@ -76,7 +77,8 @@ pnpm i bootstrap bootstrap-icons --save
 ```
 > [!IMPORTANT]
 > Instalamos la extensión “Live Sass Compiler” en VSCode y lo configuramos para compilar en local:
-> Instala en VSCode [Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass) y configuraló así: [/.vscode/settings.json](/.vscode/settings.json)
+> Instala en VSCode [Live Sass Compiler - Glenn Marks](https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass) y configuraló así:
++ [/.vscode/settings.json](/.vscode/settings.json)
 ```
 {
 "liveSassCompile.settings.formats":[
@@ -93,30 +95,67 @@ pnpm i bootstrap bootstrap-icons --save
 > Así, cada vez que modifiques **[/public/bootstrap.scss](/public/bootstrap.scss)** se generará **[/public/bootstrap-min.css](/public/bootstrap-min.css)**
 
 
-### Configuración de alias en Vite (path absoluto para sistema de ficheros)
+### Rutas de navegación automáticas
+> Routing automático basado en sistema de ficheros que usa Vite usando los paquetes "Genroute" y “React Router Dom”:
+```
+pnpm i @generouted/react-router react-router-dom
+```
+> Configuración del sistema de rutas basado en directorios y ficheros
++ [/vite.config.ts](/vite.config.ts)
+```javascript
+import generouted from '@generouted/react-router/plugin'
+
+export default defineConfig({ plugins: [react(), generouted()] })
+```
+> Añadimos el enrutador en la aplicación principal (o sustituimos)
++ [/src/main.tsx](/src/main.tsx)
+```javascript
+import { Routes } from '@generouted/react-router'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Routes />
+  </StrictMode>,
+)
+```
+> Creamos nuestra primera úrl basada en el sistema de ficheros ´´/pages/**´´
++ [/src/pages/index.tsx](/src/pages/index.tsx)
+```javascript
+export default function index() {
+  return <pre>
+      <code>HomePage Index ¡routing directory /pages file based default!</code>
+    </pre>
+}
+```
+> [!NOTE]
+> Podemos crear rutas dinámicas, recorrerlas para poner enlaces, navegar por jerarquías, cargar dinámicamente modales y crear layouts diferentes, todo en la documentación:
+> [https://github.com/oedotme/generouted]
+
+
+### Paths absolutos con Alias en Vite para importar recursos
 > [!IMPORTANT]
 > Añade las siguientes líneas de configuración y otras que te sean necesarias para tu aplicación:
-[/vite.config.ts](/vite.config.ts)
++ [/vite.config.ts](/vite.config.ts)
 ```javascript
 import * as path from 'path'
 
 export default defineConfig({
-  resolve: {
-    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
-  },
+  alias: [
+      { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
+      { find: '@', replacement: path.resolve(__dirname, 'src/') },
+    ],
 })
 ```
 > Así podemos importar o referenciar rutas (paths) usando su alias a modo de ruta absoluta y desde cualquier lugar, por ejemplo:
++ (/src/App.tsx)[/src/App.tsx]
 ```javascript
-/*
-** /App.tsx
-*/
-import Slot from '@/slots/Slot'
+import { useState } from 'react'
+import reactLogo from '@assets/react.svg'
+import viteLogo from '/vite.svg'
+import '@/App.css'
 
 export default function App() {
-  return (<>
-      <Slot userName="Luisplis"> ALLinONE </Slot>
-  </>)
+  return (<>Hola Mundo</>)
 }
 ```
 > [!NOTE]
@@ -127,59 +166,6 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src'),...}
   },
 })
-```
-
-
-### Rutas de navegación automáticas
-> Routing automático basado en sistema de ficheros que usa Vite usando los paquetes "Genroute" y “React Router Dom”:
-```
-pnpm install @generouted/react-router
-pnpm install react-router-dom
-```
-> Configuración del sistema de rutas basado en directorios y ficheros
-[/vite.config.ts](/vite.config.ts)
-```javascript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import generouted from '@generouted/react-router/plugin'
-
-export default defineConfig({ plugins: [react(), generouted()] })
-```
-[/src/main.tsx](/src/main.tsx)
-```javascript
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-
-import { Routes } from '@generouted/react-router'
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Routes />
-  </StrictMode>,
-)
-```
-[/src/pages/index.tsx](/src/pages/index.tsx)
-```javascript
-export default function index() {
-  return <h1>HomePage Index ¡routing directory /pages file based default!</h1>
-}
-```
-> [!NOTE]
-> Podemos crear rutas dinámicas, recorrerlas para poner enlaces, navegar por jerarquías, cargar dinámicamente modales y crear layouts diferentes, todo en la documentación:
-> [https://github.com/oedotme/generouted]
-
-> [!NOTE]
-> Truco para obtener todas las rutas sólidas con **import.meta.glob** de Vite:
-```javascript
-let links = Object.keys(import.meta.glob<Module>(
-  ['/src/pages/**/[\\w[-]*.{jsx,tsx,mdx}', '!/src/pages/**/(_!(layout)*(/*)?|_app|404)*'],
-  { eager: true },
-  )).map((item, i) => { 
-    links[i] =  item.replace("/src/pages", '').replace(".tsx", ''); 
-  })
-);
-
-console.log(links);
 ```
 
 BLA BLA BLA
