@@ -171,7 +171,20 @@ export default function index() {
 > [!NOTE]
 > Podemos crear rutas dinámicas, recorrerlas para poner enlaces, navegar por jerarquías, cargar dinámicamente modales y crear layouts diferentes, todo en la documentación:
 > [https://github.com/oedotme/generouted]
- 
+
+> [!NOTE]
+> Truco para obtener todas las rutas sólidas con **import.meta.glob** de Vite:
+```javascript
+let links = Object.keys(import.meta.glob<Module>(
+  ['/src/pages/**/[\\w[-]*.{jsx,tsx,mdx}', '!/src/pages/**/(_!(layout)*(/*)?|_app|404)*'],
+  { eager: true },
+  )).map((item, i) => { 
+    links[i] =  item.replace("/src/pages", '').replace(".tsx", ''); 
+  })
+);
+
+console.log(links);
+```
 
 BLA BLA BLA
 
