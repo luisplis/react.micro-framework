@@ -11,7 +11,7 @@ Además, voy a ir añadiendo retos y ejemplos con React para practicar más y ma
 - Componentes de interfaz multimedia: imágenes, galerías, vídeos (varios componentes)
 
 
-### Instalación de bundle Vite con React y TypeScript
+## Instalación de bundle Vite con React y TypeScript
 > Instalar sin clonar este repositorio, cambia WWW y PYTO al gusto:
 ```
 cd /WWW
@@ -19,9 +19,13 @@ pnpm create vite@latest PYTO --template react-ts
 ```
 
 
-### Actualizar e instalar la última versión de React
+## Actualizar e instalar la última versión de React
 ```
 pnpm install --save react@latest react-dom@latest
+```
+> Cada vez que instalemos paquetes, tendremos que aprovar el arreglo de dependencias equivalente a ``npm fund``:
+```
+pnpm approve-builds -g
 ```
 
 
@@ -30,8 +34,6 @@ pnpm install --save react@latest react-dom@latest
 pnpm install @vheemstra/vite-plugin-imagemin -D
 pnpm install imagemin-mozjpeg
 pnpm install imagemin-webp
-
-pnpm approve-builds -g
 ```
 > Aseguramos que la configuración de Vite utiliza los plugins en su configuración:
 [/vite.config.ts](/vite.config.ts) 
@@ -56,10 +58,6 @@ cd /WWW/PYTO
 pnpm install
 pnpm install -g sass
 pnpm i bootstrap bootstrap-icons --save
-```
-> Aprobamos la mezcla de paquetes equivalente a ``npm fund``
-```
-pnpm approve-builds -g
 ```
 > [!IMPORTANT]
 > Descargamos e importamos los estilos de Bootstrap compilado y optimizado a medida:
