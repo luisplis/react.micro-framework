@@ -23,17 +23,19 @@ pnpm create vite@latest PYTO --template react-ts
 ```
 pnpm install --save react@latest react-dom@latest
 ```
-> Cada vez que instalemos paquetes, tendremos que aprovar el arreglo de dependencias equivalente a ``npm fund``:
+> Cada vez que instalemos paquetes, tendremos que lanzar el arreglo de dependencias ``npm fund``:
 ```
-pnpm approve-builds -g
+pnpm approve-builds
+```
+> Cada vez que instalemos paquetes, o clonemos repositorio, es aconsejable actualizar nuestro repositorio de ``node_modules``:
+```
+pnpm install --save
 ```
 
 
 ### Instalar soporte para imágenes en Vite mediante plugins del bundle:
 ```
-pnpm install @vheemstra/vite-plugin-imagemin -D
-pnpm install imagemin-mozjpeg
-pnpm install imagemin-webp
+pnpm i vite-plugin-imagemin -D
 ```
 > Aseguramos que la configuración de Vite utiliza los plugins en su configuración añadiendo:
 [/vite.config.ts](/vite.config.ts) 
@@ -44,19 +46,20 @@ import imageminWebp from 'imagemin-webp'
 
 export default defineConfig({
   plugins: [
-    viteImagemin({ plugins: { jpg: imageminMozjpeg({quality: 70}) },
-      makeWebp: { plugins: { jpg: imageminWebp({quality: 70}) } }
-    })
+    viteImagemin()
   ],
 })
 ```
+> [!NOTE]
+> Más información en (@vite-plugin-imagemin)[https://github.com/vbenjs/vite-plugin-imagemin]
+> [!IMPORTANT]
+> Puede que necesites soporte en el servidor para estos formatos de imagen
+[/public/.htaccess]
+(/public/.htaccess)
 
 
 ### Integrar Bootstrap compilado con Soporte SASS
 ```
-cd /WWW/PYTO
-pnpm install
-pnpm install -g sass
 pnpm i bootstrap bootstrap-icons --save
 ```
 > [!IMPORTANT]
