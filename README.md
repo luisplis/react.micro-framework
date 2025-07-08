@@ -42,9 +42,12 @@ pnpm install --save react@latest react-dom@latest
 pnpm install @vheemstra/vite-plugin-imagemin -D
 pnpm install imagemin-mozjpeg
 pnpm install imagemin-webp
+
+pnpm approve-builds -g
 ```
-Aseguramos que la configuración de Vite utiliza los plugins:
-```
+> Aseguramos que la configuración de Vite utiliza los plugins en su configuración:
+[/vite.config.ts](/vite.config.ts) 
+```javascript
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import viteImagemin from '@vheemstra/vite-plugin-imagemin'
