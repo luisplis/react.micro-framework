@@ -20,7 +20,7 @@ pnpm create vite@latest
 > - Project Name: "react.micro-framework" 
 > - Select Framework: "React" 
 > - Select Variant: TypeScript + SWC
-> -- ```npm create vite@latest rt-pyto -- --template react-ts```
+> - O todo en un paso: ``npm create vite@latest rt-pyto -- --template react-ts``
 ```
 cd /PROJECTS/react.micro-framework
 pnpm install
