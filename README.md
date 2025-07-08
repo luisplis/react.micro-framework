@@ -51,7 +51,8 @@ export default defineConfig({
 })
 ```
 > [!IMPORTANT]
-> Soporte en servidor web para estos formatos de imagen: copia [/public/.htaccess](/public/.htaccess) en tu directorio raíz.
+> Soporte en servidor web para estos formatos de imagen en tu directorio raíz:
+  [/public/.htaccess](/public/.htaccess)
 > Más información en (vite-plugin-imagemin)[https://github.com/vbenjs/vite-plugin-imagemin]
 
 
@@ -61,7 +62,7 @@ pnpm i bootstrap bootstrap-icons --save
 ```
 > [!IMPORTANT]
 > Descargamos e importamos los estilos de Bootstrap compilado y optimizado a medida:
-[/public/bootstrap.scss](/public/bootstrap.scss)
+  [/public/bootstrap.scss](/public/bootstrap.scss)
 ```
 @import "bootstrap-icons/font/bootstrap-icons.min.css";
 
