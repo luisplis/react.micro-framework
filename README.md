@@ -12,8 +12,8 @@ Además, voy a ir añadiendo retos y ejemplos con React para practicar más y ma
 > - Soporte para páginas web progresivas PWA y aplicaciones de una página SPA (bundle Vite)
 > - Componentes de interfaz multimedia: imágenes, galerías, vídeos (varios componentes)
 
-### Instalación de Vite + React
-Instalar sin clonar este repositorio:
+### Instalación de bundle Vite con React y TypeScript
+> Instalar sin clonar este repositorio:
 ```
 cd /PROJECTS
 pnpm create vite@latest
@@ -27,7 +27,7 @@ pnpm install
 pnpm install -g sass
 pnpm i bootstrap bootstrap-icons --save
 ```
-Aprobamos la mezcla de paquetes (npm fund)
+> Aprobamos la mezcla de paquetes (npm fund)
 ```
 pnpm approve-builds -g
 ```
