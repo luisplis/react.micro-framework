@@ -18,7 +18,7 @@ cd /WWW
 pnpm create vite@latest PYTO --template react-ts
 ```
 > [!NOTE]
-> Documentación de Vite (es.vite.dev)[https://es.vite.dev/config/]
+Documentación de Vite (es.vite.dev)[https://es.vite.dev/config/]
 
 ## Actualizar e instalar la última versión de React
 ```
