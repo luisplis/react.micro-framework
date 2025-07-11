@@ -1,34 +1,45 @@
-import { useState } from 'react'
+
+import { ReactNode } from 'react';
 import reactLogo from '@assets/react.svg'
-import viteLogo from '/vite.svg'
 import '@/App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import '/public/bootstrap-min.css'
+import './main.css'
+
+import Menu from '@slots/Menu'
+
+function App({ children }: { children?: ReactNode }) {
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+  <>
+    <header>
+      <nav className="collapse d-lg-block sidebar collapse bg-white">
+        <div className="position-sticky">
+          <a href="https://react.dev" target="_blank">
+            <img src={reactLogo} className="logo react" alt="React logo" />
+          </a>
+          <div className="list-group list-group-flush mx-3 mt-4">
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+              <i className="fas fa-tachometer-alt fa-fw me-3"></i><span>LINKS</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main className='container-fluid'>
+      <div className="d-flex flex-row">
+        <div className="bg-dark">
+          <Menu/>
+        </div>
+        <div className="bg-white">
+          {children}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </main>
+    <footer>
+      FOOTER
+    </footer>
+  </>
   )
 }
 
