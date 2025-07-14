@@ -6,7 +6,7 @@ import { components, hooks, utils } from '@generouted/react-router/client'
 export type Path =
   | `/`
   | `/page`
-  | `/pages`
+  | `/page-react`
   | `/tree`
   | `/tree/one`
   | `/tree/other`

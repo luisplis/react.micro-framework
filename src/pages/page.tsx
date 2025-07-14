@@ -1,5 +1,5 @@
 
-export const menu = 2;
+export const menu = 5;
 export const view = 'kaka';
 
 export default function page() {
