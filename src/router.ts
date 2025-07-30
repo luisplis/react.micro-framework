@@ -5,11 +5,13 @@ import { components, hooks, utils } from '@generouted/react-router/client'
 
 export type Path =
   | `/`
+  | `/demos`
+  | `/demos/busca-frutas`
+  | `/demos/cuestionario`
+  | `/demos/cuestionario/Quiz`
+  | `/demos/juego-3-en-raya`
   | `/page`
   | `/page-react`
-  | `/tree`
-  | `/tree/one`
-  | `/tree/other`
 
 export type Params = {
   

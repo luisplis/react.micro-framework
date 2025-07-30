@@ -3,13 +3,19 @@ import react from '@vitejs/plugin-react'
 import viteImagemin from 'vite-plugin-imagemin'
 import generouted from '@generouted/react-router/plugin'
 import * as path from 'path'
+import markdown from "vite-plugin-react-markdown";
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      include: [/\.tsx$/, /\.md$/], // <-- add .md 
+    }),
     viteImagemin(),
-    generouted()
+    generouted(),
+    markdown(),
+    tailwindcss()
   ],
   resolve: {
     alias: [

@@ -1,5 +1,7 @@
 # React MicroFramework
+
 ## @react.micro-framework
+
 He creado un microframework similar a Astro como proyecto personal hecho 100% en React para generar frontales y paginas web dinámicas a partir de componentes React, basándome en Vite y otras librerías
 para disponer de una plataforma ágil, rápida y escalable con routing y otros componentes integrados.
 
@@ -11,13 +13,32 @@ para disponer de una plataforma ágil, rápida y escalable con routing y otros c
 - Soporte para el **envío de emails automáticos** integrado en la plataforma (express + nodemailer)
 - Soporte para **páginas web** progresivas **PWA** y aplicaciones de una página **SPA** (bundle Vite)
 
-> Además, voy a ir añadiendo retos y ejemplos con React para practicar más y mantenerme lo más actualizado posible con esta tecnología.
+Además, voy a ir añadiendo retos y ejemplos con React para practicar más y mantenerme lo más actualizado posible con esta tecnología.
 
 > [!NOTE]
 > Puedes replicar el esqueleto de la aplicación o micro-framework base siguiendo el proceso de instalación:
 > [Guía FullStack](/doc/fullstack.md)
 
 ## Generar App Web con React Micro Framework
-´´´
+
+´´´console
 git clone https://github.com/luisplis/react.micro-framework
 ´´´
+
+### Estructura **app** y navegación **web**
+
+- **doc** -- Documentación Técnica (how-to)
+  ++ ···
+- **public** -- Ficheros Públicos (.htaccess)
+  ++ ···
+- **src** -- Aplicación Web (layout)
+    +++ ···
+  ++ assets
+  ++ **pages** -- Navegación Web (páginas)
+    +++ ···
+  ++ **slots** -- Componentes Esenciales (slots)
+    +++ ···
+
+> Para la navegación por sistema de ficheros equivalente a páginas seguiremos las siguientes reglas:
+
+- [Rutas /src/pages/**](https://github.com/oedotme/generouted?tab=readme-ov-file#conventions)

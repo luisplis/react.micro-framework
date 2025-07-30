@@ -7,7 +7,6 @@ cd /WWW
 pnpm create vite@latest PYTO --template react-ts
 ```
 
-> [!NOTE]
 > [Documentación de Vite](https://es.vite.dev/config/)
 
 ## Actualizar e instalar la última versión de React
@@ -50,7 +49,6 @@ export default defineConfig({
 })
 ```
 
-> [!IMPORTANT]
 > Soporte en servidor web para estos formatos de imagen en tu directorio raíz:
 
 + [/public/.htaccess](/public/.htaccess)
@@ -63,7 +61,6 @@ export default defineConfig({
 pnpm i bootstrap bootstrap-icons --save
 ```
 
-> [!IMPORTANT]
 > Descargamos e importamos los estilos de Bootstrap compilado y optimizado a medida:
 
 + [/public/bootstrap.scss](/public/bootstrap.scss)
@@ -80,8 +77,8 @@ pnpm i bootstrap bootstrap-icons --save
 :root { } body  { } /* etc */
 ```
 
-> [!IMPORTANT]
 > Instalamos la extensión “Live Sass Compiler” en VSCode y lo configuramos para compilar en local:
+
 > Instala en VSCode [Live Sass Compiler - Glenn Marks](https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass) y configuraló así:
 
 + [/.vscode/settings.json](/.vscode/settings.json)
@@ -100,7 +97,57 @@ pnpm i bootstrap bootstrap-icons --save
 }
 ```
 
-> Así, cada vez que modifiques **[/public/bootstrap.scss](/public/bootstrap.scss)** se generará **[/public/bootstrap-min.css](/public/bootstrap-min.css)**
+> Así, cada vez que modifiques **[/public/bootstrap.scss](/public/bootstrap.scss)** se generará **[/public/bootstrap-min.css](/public/bootstrap-min.css)** y finalmente, sólo tenemos que cargarlo en el layout o vista de nuestra aplicación:
+
++ [/src/App.tsx](/src/App.tsx)
+
+```javascript
+import '/node_modules/bootstrap/dist/js/bootstrap.min.js'
+import '/public/bootstrap-min.css'
+```
+
+## Integrar Tailwind CSS con (alternativa a bootstrap)
+
+```console
+pnpm i tailwindcss @tailwindcss/vite --save
+```
+
++ [/.vscode/settings.json](/.vscode/settings.json)
+
+```console
+import tailwindcss from '@tailwindcss/vite'
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+  ]
+})
+```
+
+> Para usar TaildWindCSS tan sólo tenemos que cargarlo en la CSS de nuestra aplicación, además, es perfectamente compatible con Bootstrap.
+
++ [/src/main.css](/src/main.css)
+
+```css
+@import "tailwindcss";
+
+/*
+** TailWindCSS Custom Theme
+*/
+@theme {
+  --color-primary: #E65895;
+  --color-secondary: #BC6BE8;
+  --color-gray-dark: #393F6E;
+  --color-gray-darked: #343964;
+  --color-light: #E2E4F3;
+  --color-blue: #3E9FFF;
+  --color-red: #DD524C;
+  --color-gray: #8B8EAB;
+  --color-yellow: #FFECC8;
+}
+/*
+  ···
+*/
+```
 
 ## Rutas de navegación automáticas
 
@@ -146,13 +193,10 @@ export default function index() {
 }
 ```
 
-> [!NOTE]
-> Podemos crear rutas dinámicas, recorrerlas para poner enlaces, navegar por jerarquías, cargar dinámicamente modales y crear layouts diferentes, todo en la documentación:
-> [https://github.com/oedotme/generouted]
+> Podemos crear rutas dinámicas, recorrerlas para poner enlaces, navegar por jerarquías, cargar dinámicamente modales y crear layouts diferentes, todo en la documentación [https://github.com/oedotme/generouted]
 
 ## Paths absolutos con Alias en Vite para importar recursos
 
-> [!IMPORTANT]
 > Añade las siguientes líneas de configuración y otras que te sean necesarias para tu aplicación:
 
 + [/vite.config.ts](/vite.config.ts)
@@ -162,13 +206,14 @@ import * as path from 'path'
 
 export default defineConfig({
   alias: [
+      { find: '@slots', replacement: path.resolve(__dirname, 'src/slots') },
       { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
       { find: '@', replacement: path.resolve(__dirname, 'src/') },
     ],
 })
 ```
 
-> Así podemos importar o referenciar rutas (paths) usando su alias a modo de ruta absoluta y desde cualquier lugar, por ejemplo:
+> Así podemos importar o referenciar rutas (paths) usando su alias a modo de ruta absoluta y desde cualquier lugar, por ejemplo, nuestros componentes personalizados p piezas **slots**:
 
 + [/src/App.tsx](/src/App.tsx)
 
@@ -183,7 +228,6 @@ export default function App() {
 }
 ```
 
-> [!NOTE]
 > Si usas la versión o plantilla de Vite sin TypeScript, la configuración es ligeramente diferente:
 
 ```javascript
@@ -196,9 +240,9 @@ export default defineConfig({
 
 ## Núcleo de la Aplicación Web
 
-Ahora crearemos las estructuras de páginas y componentes dentro de nuestra aplicación base ``<App/>´´ que además nos servirá de layout o vista principal.
+Ahora crearemos las estructuras de páginas y componentes dentro de nuestra aplicación base ``<App/>`` que además nos servirá de layout o vista principal.
 
-### Estructura de ficheros
+### Estructura de ficheros y navegación
 
 + /
 + **doc**
@@ -212,10 +256,10 @@ Ahora crearemos las estructuras de páginas y componentes dentro de nuestra apli
   ++ [main.tsx](/src/main.tsx) -- CUSTOM APP
   ++ [main.css](/src/main.css) -- CUSTOM STYLES
   ++ assets
-  ++ **pages**
+  ++ **pages** -- Navegación Web
     +++ [index.tsx](/src/pages/index.tsx)
     +++ ···
-  ++ **slots**
+  ++ **slots** -- Componentes Esenciales
     +++ [Menu.tsx](/src/slots/Menu.tsx)
     +++ ···
 + ···
@@ -225,9 +269,9 @@ Ahora crearemos las estructuras de páginas y componentes dentro de nuestra apli
 + /src/App.tsx
 
 ```javascript
-
 import { ReactNode } from 'react';
 import reactLogo from '@assets/react.svg'
+import '/node_modules/bootstrap/dist/js/bootstrap.min.js'
 import '/public/bootstrap-min.css'
 import '@/main.css'
 
@@ -238,7 +282,7 @@ export default function App({ children }: { children?: ReactNode }) {
   return (
   <>
     <header className="sticky-top bg-dark">
-      <div className='container'>
+      <div className='container py-2'>
         <div className='d-flex justify-content-between align-items-center'>
           <a href="https://react.dev" target="_blank">
             <img src={reactLogo} className="logo react img-fluid" alt="React logo" />
@@ -248,12 +292,12 @@ export default function App({ children }: { children?: ReactNode }) {
       </div>
     </header>
     <main className='container'>
-      <div className="row justify-content-start align-items-start vh-75">
-        <div className="col-12 col-sm-3 col-lg-2 h-md-100">
+      <div className="row justify-content-start align-items-start">
+        <div className="col-12 col-sm-3 col-lg-2 py-2">
           <Menu style='flex-column align-items-start'/>
         </div>
-        <div className="col-12 col-sm-9 col-lg-10 h-100">
-          <div className='main'>
+        <div className="col-12 col-sm-9 col-lg-10">
+          <div className='main shadow-lg'>
             {children}
           </div>
         </div>
@@ -282,15 +326,62 @@ createRoot(document.getElementById('root')!).render(
     <App>
       <Routes />
     </App>
-  </StrictMode>,
+  </StrictMode>
 )
 ```
 
-> Creamos el primer componente "**slot**" de menú automático que usará **meta.glob** de Vite para crear un menu de enlaces completamente autónomo buscando variables de menú [**order**] en cada página:
+> Podemos añadir estilos personalizados a la vez que cargamos una versión 100% compilada de Bootstrap cargando en nuestra aplicación o layout la siguiente hoja de estilos:
+
+```css
+.main {
+  margin: 30px;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.flex-row.tree .nav-item { text-align: center; }
+.flex-column.tree .nav-item { text-align: left; width: 100%; }
+.flex-row.tree .nav-item { text-align: center; }
+
+.flex-row.tree .nav-link { color: var(--bs-light); }
+.flex-row.tree .nav-link:hover { color: var(--bs-secondary); }
+
+.flex-row.subtree .nav-item { line-height: 1; }
+.flex-column.subtree .nav-item { line-height: 1; padding: 0; }
+```
+
+> Creamos el primer componente "**slot**" de menú automático que usará **meta.glob** de Vite para crear componentes esenciales como un menu de enlaces completamente autónomo buscando variables de menú [**order**] en 3 niveles de navegación:
 
 + /src/slots/Menu.tsx
 
 ```javascript
+import { replace } from "react-router-dom";
+
 export default function Menu({order = 'menu', style = 'flex-row'} : {order: string, style: string}) {
 
   const fso = Object.entries(import.meta.glob( ['/src/pages/**/[\\w[-]*.{jsx,tsx,mdx}', '!/src/pages/**/(_!(layout)*(/*)?|_app|404)*'], { eager: true } ));
@@ -300,7 +391,6 @@ export default function Menu({order = 'menu', style = 'flex-row'} : {order: stri
   let menu, deep = 0;
 
   fso.map((item) => {
-
     if (order in item[1])
     {
       if (item[1][order] > 0)
@@ -308,18 +398,18 @@ export default function Menu({order = 'menu', style = 'flex-row'} : {order: stri
         file = item[0];
         menu = Number(item[1][order]);
         link = item[0].replace("/src/pages", '').replace(".tsx", '');
-        name = ('name' in item[1])? item[1].name :link.substring(1).replace(/\//g, ' ');
-        term = ('term' in item[1])? item[1].term :link.substring(1).replace(/\//g, ' ');
-        name = name.charAt(0).toUpperCase() + name.slice(1);
-        deep = link.split('/').length-2;
-        base = (!deep)? '/': '/'+link.split('/').splice(1, deep).join('/');
-        if (link.split('/').pop() === 'index')
-        {
-          deep--; link = base;
-          deep = (deep<0)? 0: deep;
-        }
-        links.push({'name': name, 'term': term, 'base': base, 'link': link, 'file': file, 'deep': deep, 'menu': menu});
+        const index = (link.split('/').pop() === 'index');
+        deep = Number(index? link.split('/').length-2: link.split('/').length-1);
+        link = ('/'+link.replace('/index', '')).replace('//', '/');
+        base = '/'+link.split('/').splice(1, deep-1).join('/');
+
+        name = ('name' in item[1])? item[1].name :(link.split('/').pop().replace(/\//g, ' ').replace('-', ' ')).trimEnd();
+        term = ('term' in item[1])? item[1].term :(link.split('/').pop().replace(/\//g, ' ').replace('-', ' ')).trimEnd();
       }
+
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+
+      links.push({'name': name, 'term': term, 'base': base, 'link': link, 'file': file, 'deep': deep, 'menu': menu});
     }
   });
 
@@ -330,23 +420,36 @@ export default function Menu({order = 'menu', style = 'flex-row'} : {order: stri
     }
     return a[order] - b[order]; // Orden ascendente de 'menu'
   });
-  let nodes = links.filter(item => item.deep === 0);
-  let items = links.filter(item => item.deep === 1);
+
+  const menus = links.filter(link => link.deep === 1);
+  const nodes = links.filter(link => link.deep === 2);
+  const items = links.filter(link => link.deep === 3);
 
   return (<>
-      <ul className={'nav nav-pills nav-fill '+style}>
-        {nodes.map(node => (
-          <li key={node.link} className="nav-item">
-            <a className="nav-link" href={node.link} title={node.term}>
-              <strong>{node.name}</strong>
+      <ul className={'nav nav-pills nav-fill '+style+' tree'}>
+        {menus.map(menu => (
+          <li key={menu.link} className="nav-item">
+            <a className="nav-link" href={menu.link} title={menu.term}>
+              <strong>{menu.name}</strong>
             </a>
-            { (items.filter(item => node.link === item.base).length > 0) &&
-            <ul className={'nav nav-pills nav-fill '+style+' tree'}>
-              {items.filter(item => node.link === item.base).map(item => (
-                <li key={item.link} className="nav-item">
-                  <a className="nav-link" href={item.link} title={item.term}>
-                    <small>{item.name}</small>
+            { (nodes.filter(node => menu.link === node.base).length > 0) &&
+            <ul className={'nav nav-pills nav-fill '+style+' subtree'}>
+              {nodes.filter(node => menu.link === node.base).map(node => (
+                <li key={node.link} className="nav-item">
+                  <a className="nav-link" href={node.link} title={node.term}>
+                    <small>{node.name}</small>
                   </a>
+                  { (items.filter(item => node.link === item.base).length > 0) &&
+                  <ul className={'nav nav-pills nav-fill '+style+' subtree'}>
+                    {items.filter(item => node.link === item.base).map(item => (
+                      <li key={item.link} className="nav-item">
+                        <a className="nav-link" href={item.link} title={item.term}>
+                          <small>{item.name}</small>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  }
                 </li>
               ))}
             </ul>
@@ -358,20 +461,117 @@ export default function Menu({order = 'menu', style = 'flex-row'} : {order: stri
 }
 ```
 
-> Creamos la primera página de nuestro sistema de ficheros "**page**" de nuestro routing automático, podemos añadir tantas páginas como queramos siguiendo las reglas de "routing generated":
+> Como se aprecia, el componente menú ``<Menu/>`` filtra por las variables exportadas '**menu**' o '**tool**' para encontrar y listar de forma automática y en jeraquía todos los enlaces navegables de páginas dentro del directorio ''/pages/**`` (routing basado en el sistema de ficheros).
 
-+ /src/pages/index.tsx
+## Soporte para Markdown Extendido (github)
+
+Para renderizar correctamente la sintaxis de los README.md de GitHub en un proyecto de Vite con React, la mejor y más común solución es usar la librería react-markdown. Hay que instalr ``react-markdown`` para el parsing y renderizado, ``remark-gfm`` para las extensiones de GitHub Flavored Markdown (tablas, listas de tareas, tachado, etc.), y ``rehype-highlight`` (o una alternativa como react-syntax-highlighter) para el resaltado de sintaxis en los bloques de código y para que se vean igual que en Github, es necesario instalar ``remark-directive`` para los bloques especiales y cargar todos los estilos ``github-markdown-css`` de GitHub.
+
+```console
+pnpm i react-markdown remark-gfm rehype-highlight remark-directive github-markdown-css highlight.js
+```
+
+Ahora creamos un componente en nuestro framework para poder cargar ficheros ``.md`` de forma sencilla:
+
++ /src/slots/Markdown.tsx
 
 ```javascript
-export const menu = 3;
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import remarkDirective from 'remark-directive';
 
-export default function index() {
+// Importa los estilos CSS necesarios
+import 'github-markdown-css/github-markdown-light.css';
+import 'highlight.js/styles/github.css'; // <-- Este tema se ve bien con github-markdown-css
 
-  return <pre>
-      <h1>Tree Index!</h1>
-      <p>···</p>
-    </pre>
+
+interface MarkdownProps {
+  file: string; // La ruta al archivo .md (ej: '/doc/fullstack.md')
+}
+
+export default function Markdown({ file }: MarkdownProps) {
+  const [markdownContent, setMarkdownContent] = React.useState<string>('');
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    // Vite tiene una forma especial de importar archivos como texto crudo
+    // usando el sufijo `?raw`
+    import(/* @vite-ignore */ `${file}?raw`)
+      .then((module) => {
+        setMarkdownContent(module.default);
+      })
+      .catch((err) => {
+        console.error(`Error al cargar el archivo Markdown: ${file}`, err);
+        setError(`No se pudo cargar el archivo Markdown: ${file}`);
+      });
+  }, [file]);
+
+  if (error) {
+    return <div className="text-danger p-3">{error}</div>;
+  }
+
+  if (!markdownContent) {
+    return <div className="p-3">Cargando contenido...</div>;
+  }
+
+  return (
+    <div className="markdown-body"> {/* Contenedor para aplicar los estilos de GitHub */}
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm, remarkDirective]}
+        rehypePlugins={[rehypeHighlight]}
+      >
+        {markdownContent}
+      </ReactMarkdown>
+    </div>
+  );
 }
 ```
 
-> Como se aprecia, el componente menú ``<Menu/>`` filtra por las variables exportadas '**menu**' o '**tool**' para encontrar y listar de forma automática y en jeraquía todos los enlaces navegables de páginas dentro del directorio ''/pages/**`` (routing basado en el sistema de ficheros).
+> Para usar nuestro componente en cualquier página o componente, tan sólo tenemos que importarlo e invocarlo:
+
+```javascript
+import MarkDown from '@/slots/Markdown';
+
+export default function example() {
+
+  return <>
+    <Markdown file="/doc/fullstack.md" />
+  </>
+}
+```
+
+
+## React Query para manejar APIs
+
+React Query, o TanStack Query, es una librería que proporciona a React JS la capacidad de gestión de estado para cualquier tipo de datos asíncronos como la obtención de datos, el almacenamiento en caché, la sincronización y la actualización del estado del servidor, todo con el hook **useQuery**.
+
+```code
+pnpm i --save react-query
+```
+
+> Ejemplo de ´´useQuery``:
+
+```javascript
+export default function SimpleDataFetcher() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['mySimpleData'], // Clave única para esta petición
+    queryFn: async () => {
+      const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+      if (!res.ok) throw new Error('Falló la carga.');
+      return res.json();
+    },
+  });
+
+  if (isLoading) return <div>Cargando...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <div>
+      <h3>Dato obtenido:</h3>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+}
+```

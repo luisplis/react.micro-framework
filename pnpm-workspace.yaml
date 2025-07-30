@@ -7,4 +7,5 @@ ignoredBuiltDependencies:
   - pngquant-bin
 
 onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
   - cwebp-bin

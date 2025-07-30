@@ -1,9 +1,11 @@
-
 export const menu = 1;
+
+import DocuWiki from '/doc/fullstack.md';
 
 export default function index() {
 
-  return <pre>
-      <code>HomePage Index ¡routing directory /pages/[index] file based default!</code>
-    </pre>
+  return <>
+    <DocuWiki/>
+    https://github.com/geekris1/vite-plugin-react-markdown
+  </>
 }

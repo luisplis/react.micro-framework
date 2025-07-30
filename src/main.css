@@ -1,9 +1,22 @@
+@import "tailwindcss";
 
-.logo {
-  height: 6em;
+/*
+** TailWindCSS Custom Theme
+*/
+@theme {
+  --color-primary: #E65895;
+  --color-secondary: #BC6BE8;
+  --color-link: #1199FF;
+  --color-linked: #1199FF;
+  --color-dark: #393F6E;
+  --color-light: #E2E4F3;
+  --color-gray: #8B8EAB;
+}
+
+.main {
+  margin: 30px;
+  min-height: 100%;
   padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -26,9 +39,7 @@
   }
 }
 
-.main {
-  margin: 30px;
-}
-
-.flex-row.tree { margin-top: -1em; }
-.flex-column.tree { margin-left: -3em; padding-left: 3em; }
+.tree .flex-column .nav-item { text-align: left; width: 100%; }
+.tree .flex-row .nav-item { text-align: center; }
+.nodes .nav-link { padding-left: 1em; }
+.items .nav-link { padding-left: 2em; }
