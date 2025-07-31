@@ -1,11 +1,11 @@
-export const menu = 1;
+import Markdown from "../slots/Markdown";
+import fullstack from '/doc/fullstack.md?raw';
 
-import DocuWiki from '/doc/fullstack.md';
+export const menu = 1;
 
 export default function index() {
 
   return <>
-    <DocuWiki/>
-    https://github.com/geekris1/vite-plugin-react-markdown
+    <Markdown file={fullstack}/>
   </>
 }

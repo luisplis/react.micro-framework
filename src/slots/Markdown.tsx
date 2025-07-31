@@ -8,33 +8,31 @@ import remarkDirective from 'remark-directive';
 import 'github-markdown-css/github-markdown-light.css';
 import 'highlight.js/styles/github.css'; // <-- Este tema se ve bien con github-markdown-css
 
-
-interface MarkdownProps {
-  file: string; // La ruta al archivo .md (ej: '/doc/fullstack.md')
-}
-
-export default function Markdown({ file }: MarkdownProps) {
-  const [markdownContent, setMarkdownContent] = React.useState<string>('');
+export default function Markdown({ file }: { file: string }) {
+  const [markdown, setMarkdown] = React.useState<string>('');
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     // Vite tiene una forma especial de importar archivos como texto crudo
     // usando el sufijo `?raw`
-    import(/* @vite-ignore */ `${file}?raw`)
-      .then((module) => {
-        setMarkdownContent(module.default);
-      })
-      .catch((err) => {
-        console.error(`Error al cargar el archivo Markdown: ${file}`, err);
-        setError(`No se pudo cargar el archivo Markdown: ${file}`);
-      });
+    if (file.endsWith('.md') || file.endsWith('.mdx'))
+      import(/* @vite-ignore */ `${file}?raw`)
+        .then((module) => {
+          setMarkdown(module.default);
+        })
+        .catch((err) => {
+          console.error(`Error al cargar el archivo Markdown: ${file}`, err);
+          setError(`No se pudo cargar el archivo Markdown: ${file}`);
+        });
+    else
+        setMarkdown(file);
   }, [file]);
 
   if (error) {
     return <div className="text-danger p-3">{error}</div>;
   }
 
-  if (!markdownContent) {
+  if (!markdown) {
     return <div className="p-3">Cargando contenido...</div>;
   }
 
@@ -44,7 +42,7 @@ export default function Markdown({ file }: MarkdownProps) {
         remarkPlugins={[remarkGfm, remarkDirective]}
         rehypePlugins={[rehypeHighlight]}
       >
-        {markdownContent}
+        {markdown}
       </ReactMarkdown>
     </div>
   );

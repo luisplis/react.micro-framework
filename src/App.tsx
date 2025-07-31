@@ -1,11 +1,11 @@
 
-import { ReactNode } from 'react';
-import reactLogo from '@assets/react.svg'
-import '/public/bootstrap-min.css'
-import '/node_modules/bootstrap/dist/js/bootstrap.min.js'
-import '@/main.css'
+import reactLogo from '@assets/react.svg';
+import '/public/bootstrap-min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import './main.css';
 
-import Menu from '@slots/Menu'
+import Menu from '@slots/Menu';
+import type { ReactNode } from 'react';
 
 export default function App({ children }: { children?: ReactNode }) {
 
@@ -14,7 +14,7 @@ export default function App({ children }: { children?: ReactNode }) {
     <header className="sticky-top bg-dark">
       <div className='container py-2'>
         <div className='d-flex justify-content-between align-items-center'>
-          <a href="https://react.dev" target="_blank">
+          <a href="/" title="inicio">
             <img src={reactLogo} className="logo react img-fluid" alt="React logo" />
           </a>
           <Menu order='tool'/>

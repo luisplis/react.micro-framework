@@ -197,7 +197,7 @@ export default function index() {
 
 ## Paths absolutos con Alias en Vite para importar recursos
 
-> Añade las siguientes líneas de configuración y otras que te sean necesarias para tu aplicación:
+Para poder usar en tu aplicación (vite+react) alias de paths absolutos para acortarlos, es imprescindible añadir las siguientes líneas de configuración y otras que te sean necesarias para tu aplicación vite:
 
 + [/vite.config.ts](/vite.config.ts)
 
@@ -208,24 +208,31 @@ export default defineConfig({
   alias: [
       { find: '@slots', replacement: path.resolve(__dirname, 'src/slots') },
       { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
-      { find: '@', replacement: path.resolve(__dirname, 'src/') },
+      { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
     ],
 })
 ```
 
-> Así podemos importar o referenciar rutas (paths) usando su alias a modo de ruta absoluta y desde cualquier lugar, por ejemplo, nuestros componentes personalizados p piezas **slots**:
+Sin embargo, tu entorno de desarrollo (vscode) pueden no encontrar ni enlazar estras rutas correctamente si no lo indicamos en la configuración del compilador:
 
-+ [/src/App.tsx](/src/App.tsx)
++ [/tsconfig.json](/tsconfig.json)
+
+```console
+{
+  "compilerOptions": {
+     "paths": {
+      "@assets/*": ["./src/assets/*"],
+      "@slots/*": ["./src/slots/*"],
+      "@pages/*": ["./src/pages/*"],
+    }
+  }
+}
+```
+
+Así podemos importar o referenciar rutas (paths) usando su alias a modo de ruta absoluta y desde cualquier lugar, por ejemplo, nuestros componentes personalizados o piezas **slots**:
 
 ```javascript
-import { useState } from 'react'
-import reactLogo from '@assets/react.svg'
-import viteLogo from '/vite.svg'
-import '@/App.css'
-
-export default function App() {
-  return (<>Hola Mundo</>)
-}
+import reactLogo from '@assets/react.svg';
 ```
 
 > Si usas la versión o plantilla de Vite sin TypeScript, la configuración es ligeramente diferente:
@@ -273,7 +280,7 @@ import { ReactNode } from 'react';
 import reactLogo from '@assets/react.svg'
 import '/node_modules/bootstrap/dist/js/bootstrap.min.js'
 import '/public/bootstrap-min.css'
-import '@/main.css'
+import './main.css'
 
 import Menu from '@slots/Menu'
 
@@ -319,7 +326,7 @@ export default function App({ children }: { children?: ReactNode }) {
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Routes } from '@generouted/react-router'
-import App from '@/App'
+import App from './App'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -486,33 +493,31 @@ import remarkDirective from 'remark-directive';
 import 'github-markdown-css/github-markdown-light.css';
 import 'highlight.js/styles/github.css'; // <-- Este tema se ve bien con github-markdown-css
 
-
-interface MarkdownProps {
-  file: string; // La ruta al archivo .md (ej: '/doc/fullstack.md')
-}
-
-export default function Markdown({ file }: MarkdownProps) {
-  const [markdownContent, setMarkdownContent] = React.useState<string>('');
+export default function Markdown({ file }: { file: string }) {
+  const [markdown, setMarkdown] = React.useState<string>('');
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     // Vite tiene una forma especial de importar archivos como texto crudo
     // usando el sufijo `?raw`
-    import(/* @vite-ignore */ `${file}?raw`)
-      .then((module) => {
-        setMarkdownContent(module.default);
-      })
-      .catch((err) => {
-        console.error(`Error al cargar el archivo Markdown: ${file}`, err);
-        setError(`No se pudo cargar el archivo Markdown: ${file}`);
-      });
+    if (file.endsWith('.md') || file.endsWith('.mdx'))
+      import(/* @vite-ignore */ `${file}?raw`)
+        .then((module) => {
+          setMarkdown(module.default);
+        })
+        .catch((err) => {
+          console.error(`Error al cargar el archivo Markdown: ${file}`, err);
+          setError(`No se pudo cargar el archivo Markdown: ${file}`);
+        });
+    else
+        setMarkdown(file);
   }, [file]);
 
   if (error) {
     return <div className="text-danger p-3">{error}</div>;
   }
 
-  if (!markdownContent) {
+  if (!markdown) {
     return <div className="p-3">Cargando contenido...</div>;
   }
 
@@ -522,7 +527,7 @@ export default function Markdown({ file }: MarkdownProps) {
         remarkPlugins={[remarkGfm, remarkDirective]}
         rehypePlugins={[rehypeHighlight]}
       >
-        {markdownContent}
+        {markdown}
       </ReactMarkdown>
     </div>
   );
@@ -532,16 +537,30 @@ export default function Markdown({ file }: MarkdownProps) {
 > Para usar nuestro componente en cualquier página o componente, tan sólo tenemos que importarlo e invocarlo:
 
 ```javascript
-import MarkDown from '@/slots/Markdown';
+import MarkDown from '@slots/Markdown';
 
 export default function example() {
 
   return <>
-    <Markdown file="/doc/fullstack.md" />
+    <Markdown file="/doc/fullstack.md" />{ /* path absoluto */}
   </>
 }
 ```
 
+o bién, si prefieres:
+
+```javascript
+import MarkDown from '@slots/Markdown';
+
+import readme from './readme.md?raw'; // path local
+
+export default function example() {
+
+  return <>
+    <Markdown file={readme} />
+  </>
+}
+```
 
 ## React Query para manejar APIs
 
