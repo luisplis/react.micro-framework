@@ -1,30 +1,43 @@
 
 export const menu = 3;
 import Markdown from '@slots/Markdown';
-import readme from './readme.md?raw';
+import readme from './index.md?raw';
 import "tailwindcss";
-
-
 
 export default function cuestionario() {
 
   return <>
-  <h1 className="text-3xl font-bold text-primary">CUESTIONARIO</h1>
-  <a className="text-link hover text-linked text-shadow-linked" 
-    href="https://github.com/agomezr/react-country-quiz" target="_blank">
-  </a>
+  <h1 className="font-bold text-indigo-400">CUESTIONARIO</h1>
+  <p className="text-indigo-400">Bla bla bla kakak de kaka de vaca</p>
+  <div className='w-100 mx-auto'>
+    <div className='flex flex-col md:flex-row gap-3'>
+      <div className='md:w-7/12 xl:w-8/12 border'>
+        <img className="w-auto" alt="preview" src="https://github.com/user-attachments/assets/c0271189-cf88-459a-8014-e09ec5fecdec" />
+      </div>
+      <div className='md:w-5/12 xl:w-4/12 border p-3'>
+        <p className='mb-3'>
+          <strong>Referencia:</strong> &nbsp;
+          <a className="text-lnk hover:text-lnkd" href="https://devchallenges.io/challenge/country-quizz" target="_blank">
+            Country Quiz
+          </a>
+        </p>
+        <p>
+          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
+            Enunciado del ejercicio
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
   <hr/>
-  <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
-    Enunciado del ejercicio
-  </button>
   <div className="modal fade" id="myLargeModal" tabIndex={-1} aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div className="modal-dialog modal-lg">
+    <div className="modal-dialog modal-xl">
       <div className="modal-content">
         <div className="modal-header">
           <h2 className='text-primary'>Enunciado del ejercicio</h2>
           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div className="modal-body">
+        <div className="modal-body bg-white">
           <Markdown file={readme} />
         </div>
         <div className="modal-footer text-center">

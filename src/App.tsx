@@ -1,6 +1,6 @@
 
 import reactLogo from '@assets/react.svg';
-import '/public/bootstrap-min.css';
+//import '/public/bootstrap-min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './main.css';
 

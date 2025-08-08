@@ -1,15 +1,17 @@
-@import "tailwindcss";
+/*
+** Bootstrap Customized
+*/
+@import '@assets/bootstrap-min.css';
 
 /*
-** TailWindCSS Custom Theme
+** TailWindCSS && Custom Theme
 */
+@import "tailwindcss";
+
 @theme {
-  --color-primary: #E65895;
-  --color-secondary: #BC6BE8;
-  --color-link: #1199FF;
-  --color-linked: #1199FF;
-  --color-dark: #393F6E;
-  --color-light: #E2E4F3;
+  --color-prn: #E65895;
+  --color-lnk: #0077FF;
+  --color-lnkd: #3355FF;
   --color-gray: #8B8EAB;
 }
 

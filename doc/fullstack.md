@@ -61,11 +61,11 @@ export default defineConfig({
 pnpm i bootstrap bootstrap-icons --save
 ```
 
-> Descargamos e importamos los estilos de Bootstrap compilado y optimizado a medida:
+Descargamos e importamos los estilos de Bootstrap compilado y optimizado a medida en assets porque si lo hacemos en public tendríamos problemas al cargar las rutas en el compilado de vite (las rutas absolutas no están disponibles fuera de App):
 
-+ [/public/bootstrap.scss](/public/bootstrap.scss)
++ [/assets/bootstrap.scss](/assets/bootstrap.scss)
 
-```console
+```css
 @import "bootstrap-icons/font/bootstrap-icons.min.css";
 
 // Customize bootstrap
@@ -77,9 +77,7 @@ pnpm i bootstrap bootstrap-icons --save
 :root { } body  { } /* etc */
 ```
 
-> Instalamos la extensión “Live Sass Compiler” en VSCode y lo configuramos para compilar en local:
-
-> Instala en VSCode [Live Sass Compiler - Glenn Marks](https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass) y configuraló así:
+Instalamos la extensión “Live Sass Compiler” en VSCode y lo configuramos para compilar en local. Instala en VSCode [Live Sass Compiler - Glenn Marks](https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass) y configuraló así:
 
 + [/.vscode/settings.json](/.vscode/settings.json)
 
@@ -97,16 +95,25 @@ pnpm i bootstrap bootstrap-icons --save
 }
 ```
 
-> Así, cada vez que modifiques **[/public/bootstrap.scss](/public/bootstrap.scss)** se generará **[/public/bootstrap-min.css](/public/bootstrap-min.css)** y finalmente, sólo tenemos que cargarlo en el layout o vista de nuestra aplicación:
+> Así, cada vez que modifiques **[/public/bootstrap.scss](/public/bootstrap.scss)** se generará **[/public/bootstrap-min.css](/public/bootstrap-min.css)** y finalmente, sólo tenemos que cargarlo en nuestra aplicación:
 
 + [/src/App.tsx](/src/App.tsx)
 
 ```javascript
-import '/node_modules/bootstrap/dist/js/bootstrap.min.js'
-import '/public/bootstrap-min.css'
+import 'bootstrap/dist/js/bootstrap.min.js';
 ```
 
++ [/src/main.css](/src/main.css)
+
+```css
+@import '@assets/bootstrap-min.css';
+```
+
+> Ahora ya tenemos inicializado Bootstrap en todo nuestro componente ``App´´, es decir, en toda la aplicación.
+
 ## Integrar Tailwind CSS con (alternativa a bootstrap)
+
+Antes de nada, denbemos instalar sus librerías y dependencias en la aplicación weben inicializar su carga como plugin de Vite.
 
 ```console
 pnpm i tailwindcss @tailwindcss/vite --save
@@ -123,30 +130,25 @@ export default defineConfig({
 })
 ```
 
-> Para usar TaildWindCSS tan sólo tenemos que cargarlo en la CSS de nuestra aplicación, además, es perfectamente compatible con Bootstrap.
+Después debemos cargar TaildWindCSS en la CSS de nuestra aplicación donde queramos que funcione, es perfectamente compatible con Bootstrap y otros estilos de CSS personalizados, aunque debemos evitar colisiones de clases.
 
 + [/src/main.css](/src/main.css)
 
 ```css
+/*
+** TailWindCSS && Custom Theme
+*/
 @import "tailwindcss";
 
-/*
-** TailWindCSS Custom Theme
-*/
 @theme {
   --color-primary: #E65895;
   --color-secondary: #BC6BE8;
-  --color-gray-dark: #393F6E;
-  --color-gray-darked: #343964;
+  --color-link: #1199FF;
+  --color-linked: #1199FF;
+  --color-dark: #393F6E;
   --color-light: #E2E4F3;
-  --color-blue: #3E9FFF;
-  --color-red: #DD524C;
   --color-gray: #8B8EAB;
-  --color-yellow: #FFECC8;
 }
-/*
-  ···
-*/
 ```
 
 ## Rutas de navegación automáticas
