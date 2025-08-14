@@ -1,8 +1,10 @@
+import * as path from 'path'
 import { defineConfig } from 'vite'
+
 import react from '@vitejs/plugin-react'
 import viteImagemin from 'vite-plugin-imagemin'
 import generouted from '@generouted/react-router/plugin'
-import * as path from 'path'
+
 import markdown from "vite-plugin-react-markdown";
 import tailwindcss from '@tailwindcss/vite'
 
@@ -15,13 +17,13 @@ export default defineConfig({
     viteImagemin(),
     generouted(),
     markdown(),
-    tailwindcss()
+    tailwindcss(),
   ],
   resolve: {
     alias: [
-      { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
-      { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
-      { find: '@slots', replacement: path.resolve(__dirname, 'src/slots') }
+      { find: '@slots', replacement: path.resolve(__dirname, './src/slots') },
+      { find: '@pages', replacement: path.resolve(__dirname, './src/pages') },
+      { find: '@assets', replacement: path.resolve(__dirname, './src/assets') },
     ],
   },
 })

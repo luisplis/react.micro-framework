@@ -8,6 +8,9 @@ export type Path =
   | `/demos`
   | `/demos/busca-frutas`
   | `/demos/cuestionario`
+  | `/demos/cuestionario/ApiCountries`
+  | `/demos/cuestionario/Congratulations`
+  | `/demos/cuestionario/Question`
   | `/demos/cuestionario/Quiz`
   | `/demos/juego-3-en-raya`
   | `/page`

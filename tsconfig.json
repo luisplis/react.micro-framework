@@ -5,10 +5,11 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-     "paths": {
+    "paths": {
       "@slots/*": ["./src/slots/*"],
       "@pages/*": ["./src/pages/*"],
       "@assets/*": ["./src/assets/*"],
-    }
-  }
+    },
+  },
+  
 }

@@ -231,6 +231,18 @@ Sin embargo, tu entorno de desarrollo (vscode) pueden no encontrar ni enlazar es
 }
 ```
 
+Además, es posible que typescript no valide el tipo de módulo que cargamos con los alias creados, en este caso o error de VSCode, debemos declararlo en la configuración del entorno.
+
+> Cannot find module '@slots/Markdown' or **its corresponding type declarations**.
+
++ [/src/vite-env.d.ts](/src/vite-env.d.ts)
+
+```javascript
+declare module '@slots/*';
+declare module '@pages/*';
+declare module '@assets/*';
+```
+
 Así podemos importar o referenciar rutas (paths) usando su alias a modo de ruta absoluta y desde cualquier lugar, por ejemplo, nuestros componentes personalizados o piezas **slots**:
 
 ```javascript

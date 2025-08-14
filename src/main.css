@@ -4,17 +4,21 @@
 @import '@assets/bootstrap-min.css';
 
 /*
-** TailWindCSS && Custom Theme
+** TailwindCSS Customized
 */
 @import "tailwindcss";
 
 @theme {
-  --color-prn: #E65895;
-  --color-lnk: #0077FF;
-  --color-lnkd: #3355FF;
+  --color-colorize: #F53773;
+  --color-link: #0077FF;
+  --color-linked: #3355FF;
   --color-gray: #8B8EAB;
+  --color-smoke: rgba(0, 0, 0, 0.5);
 }
 
+/*
+** Custom Layout
+*/
 .main {
   margin: 30px;
   min-height: 100%;
@@ -34,7 +38,6 @@
     transform: rotate(360deg);
   }
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .logo {
     animation: logo-spin infinite 20s linear;
@@ -43,5 +46,6 @@
 
 .tree .flex-column .nav-item { text-align: left; width: 100%; }
 .tree .flex-row .nav-item { text-align: center; }
+.tree .nav-link { padding: 0.15em; }
 .nodes .nav-link { padding-left: 1em; }
 .items .nav-link { padding-left: 2em; }

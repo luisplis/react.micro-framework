@@ -1,6 +1,6 @@
 
 export const menu = 3;
-import Markdown from '@slots/Markdown';
+import Markdown from '@slots/Markdown'; 
 import readme from './index.md?raw';
 import "tailwindcss";
 
@@ -8,18 +8,27 @@ export default function cuestionario() {
 
   return <>
   <h1 className="font-bold text-indigo-400">CUESTIONARIO</h1>
-  <p className="text-indigo-400">Bla bla bla kakak de kaka de vaca</p>
+  <p className='text-colorize mb-3'>
+    <strong>Referencia:</strong> &nbsp;
+    <a className="!text-link hover:!text-linked" href="https://devchallenges.io/challenge/country-quizz" target="_blank">
+      Country Quiz
+    </a>
+  </p>
   <div className='w-100 mx-auto'>
     <div className='flex flex-col md:flex-row gap-3'>
       <div className='md:w-7/12 xl:w-8/12 border'>
         <img className="w-auto" alt="preview" src="https://github.com/user-attachments/assets/c0271189-cf88-459a-8014-e09ec5fecdec" />
       </div>
       <div className='md:w-5/12 xl:w-4/12 border p-3'>
-        <p className='mb-3'>
-          <strong>Referencia:</strong> &nbsp;
-          <a className="text-lnk hover:text-lnkd" href="https://devchallenges.io/challenge/country-quizz" target="_blank">
-            Country Quiz
-          </a>
+        <h2>Componentes</h2>
+        <p>
+          <strong>Quiz</strong> <small>(maestro)</small>
+        </p>
+        <p className='!ms-4'>
+          <strong>Question</strong>
+          </p>
+        <p className='!ms-8'>
+          <strong>Congratulations</strong>
         </p>
         <p>
           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
