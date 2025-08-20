@@ -12,59 +12,66 @@ export type Question = {
   query: string;
   tests: string[];
   valid: number;
-  answer: number;
+  answer: number | null;
 };
 
 export default function Quiz() {
 
-  const [status, setStatus] = useState(false);
+  const num = 4;
+  const [finish, setFinish] = useState<boolean>(false);
+  const [current, setCurrent] = useState<number>(0);
   const [country, setCountry] = useState<Country>();
-  const [countries, setCountries] = useState<Country[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
   
   useEffect(() => {
     const apiCountries = async () => {
       const countries = await getCountries();
-      setCountries(countries);
-      const country = countries[Math.floor(Math.random() * countries.length)];
+      const country   = countries[Math.floor(Math.random() * countries.length)];
       setCountry(country);
-      const questions = getQuestions(country, countries, 4);
+      const questions = getQuestions(country, countries, num);
       setQuestions(questions);
     };
-
+    
     apiCountries();
-
   }, []);
 
+  /**
+   * Event: question data & paginate
+   */
+  const handleUserAnswer = function(index: number, answer: number, valid: number){
+    // Save questions user data answer
+    const queries =[...questions];
+    queries[index].answer = answer;
+    setQuestions(queries);
+    // Save current page
+    if (index < num) index++;
+    setCurrent(index);
+    if (index == num) setFinish(true);
+  }
+  
+  // Set current question page
+  const q = questions[current];
+  
   return <>
-    <h1>Quiz Component -- Status == {Number(status)}</h1>
-    {!status && 
+    <h1>Quiz test</h1>
+    <hr/>
+    {q && !finish && 
       <div className="!grid !grid-cols-2 !gap-4">
       {
-      questions.map((q, index) => (
-          <Question key={index} index={q.index} query={q.query} tests={q.tests} valid={q.valid} answer={q.answer} handleAnswer={handleUserAnswer} />
-        ))
+        <Question index={current} query={q.query} tests={q.tests} valid={q.valid} answer={q.answer} handleAnswer={handleUserAnswer} />
       }
       </div>
     }
-    {status && 
+    {finish && 
       <div className="quiz-congratulations">
       {
-        /*
-        <Congratulations key={Number(status)}/>
-        */
+        <Congratulations results={[...questions]}/>
       }
       </div>
     }
     <hr/>
     <pre>{JSON.stringify(country, null, 2)}</pre>
   </>
-}
-
-function handleUserAnswer(index: number, answer: number){
-
-  alert('User ASWER '+index+' => '+answer);
-
 }
 
 function getQuestions(country: Country, countries: Country[], num: number = 10): Question[] {
@@ -90,7 +97,7 @@ function getQuestions(country: Country, countries: Country[], num: number = 10):
 
     const field = querys[i][0] as keyof Country;
     const value = country[field];
-    const question: Question = {index: i, query: querys[i][1].replace('COUNTRY', country.name), tests: [], valid: 0, answer: 0};
+    const question: Question = {index: i, query: querys[i][1].replace('COUNTRY', country.name), tests: [], valid: 0, answer: null};
     
      // Add 3 diferent country answer
     let q = 0;
@@ -110,9 +117,12 @@ function getQuestions(country: Country, countries: Country[], num: number = 10):
     }
 
     // Add valid answer in random index
-    const valid = Math.floor(Math.random() * (alternatives.length + 1));
-    alternatives.splice(valid, 0, value);
+    const verity = Math.floor(Math.random() * (4));
+    question.valid = verity;
+    alternatives.splice(verity, 0, value);
     question.tests = alternatives;
+    
+    question.answer = null;
 
     questions.push(question);
   }

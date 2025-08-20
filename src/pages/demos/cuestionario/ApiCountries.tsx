@@ -61,7 +61,7 @@ export default async function getCountries(limit: number = 0): Promise<Country[]
     const data: CountryData[] = await response.json();
 
     // Transformamos los datos de la API a un array plano más fácil de manejar
-    const countries: Country[] = data.map(country => {
+    const countries = data.map(country => {
       return {
         name: country.name.common,
         official: country.name.official,
