@@ -46,7 +46,7 @@ export default function juego3enRaya() {
     return null;
   }
 
-  return <div className='text-center'>
+  return <div className='main shadow-lg text-center'>
     <h1 className='text-black'>
       {name}
     </h1>

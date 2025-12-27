@@ -7,10 +7,15 @@ export type Path =
   | `/`
   | `/demos`
   | `/demos/busca-frutas`
+  | `/demos/crud`
+  | `/demos/crud/Crud`
+  | `/demos/crud/Crud/test`
+  | `/demos/crud/useCrud`
   | `/demos/cuestionario`
   | `/demos/cuestionario/ApiCountries`
   | `/demos/cuestionario/Congratulations`
-  | `/demos/cuestionario/Question`
+  | `/demos/cuestionario/Paginate`
+  | `/demos/cuestionario/QuestionTest`
   | `/demos/cuestionario/Quiz`
   | `/demos/juego-3-en-raya`
   | `/page`

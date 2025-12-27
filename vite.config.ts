@@ -2,7 +2,7 @@ import * as path from 'path'
 import { defineConfig } from 'vite'
 
 import react from '@vitejs/plugin-react'
-import viteImagemin from 'vite-plugin-imagemin'
+//import viteImagemin from 'vite-plugin-imagemin'
 import generouted from '@generouted/react-router/plugin'
 
 import markdown from "vite-plugin-react-markdown";
@@ -14,7 +14,7 @@ export default defineConfig({
     react({
       include: [/\.tsx$/, /\.md$/], // <-- add .md 
     }),
-    viteImagemin(),
+    //  viteImagemin(),
     generouted(),
     markdown(),
     tailwindcss(),

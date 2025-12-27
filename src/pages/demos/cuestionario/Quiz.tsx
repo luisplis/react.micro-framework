@@ -1,9 +1,10 @@
 
 // import "tailwindcss";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Congratulations from "./Congratulations";
 import getCountries, { arrayShuffle, type Country } from "./ApiCountries";
-import Question from "./Question";
+import QuestionTest from "./QuestionTest";
+import Paginate from "./Paginate";
 
 export const menu = 1;
 
@@ -20,16 +21,19 @@ export default function Quiz() {
   const num = 4;
   const [finish, setFinish] = useState<boolean>(false);
   const [current, setCurrent] = useState<number>(0);
-  const [country, setCountry] = useState<Country>();
   const [questions, setQuestions] = useState<Question[]>([]);
+  
+  let countryName = useRef<HTMLHeadingElement>(null);
+  let countryMap = useRef<HTMLAnchorElement>(null);
   
   useEffect(() => {
     const apiCountries = async () => {
       const countries = await getCountries();
       const country   = countries[Math.floor(Math.random() * countries.length)];
-      setCountry(country);
       const questions = getQuestions(country, countries, num);
       setQuestions(questions);
+      if (countryName.current) countryName.current.textContent = country.name;
+      if (countryMap.current)  countryMap.current.href = country.gmap;
     };
     
     apiCountries();
@@ -38,29 +42,40 @@ export default function Quiz() {
   /**
    * Event: question data & paginate
    */
-  const handleUserAnswer = function(index: number, answer: number, valid: number){
+  const handleUserAnswer = function(index: number, answer: number, valid: number)
+  {
     // Save questions user data answer
     const queries =[...questions];
     queries[index].answer = answer;
     setQuestions(queries);
-    // Save current page
-    if (index < num) index++;
-    setCurrent(index);
-    if (index == num) setFinish(true);
+  }
+  const handlePage = function(select: number)
+  {
+    if (select >= 0 && select <= num-1)
+    {
+      setCurrent(select);
+    }
+    let x = 0;
+    questions.forEach((item) => {
+      if (item.answer !== null) x++;
+    });
+    if (x == num) setFinish(true);
   }
   
   // Set current question page
   const q = questions[current];
   
-  return <>
-    <h1>Quiz test</h1>
-    <hr/>
-    {q && !finish && 
-      <div className="!grid !grid-cols-2 !gap-4">
+  return <div className="!container !text-center !bg-indigo-500 !min-h-screen">
+    <h2 ref={countryName} className="!text-center !pt-6 !mx-auto !text-indigo-700">
+      PAÍS
+    </h2>
+    {q && !finish && <>
+      <div className="!flex !justify-center !items-top !text-start !w-full">
       {
-        <Question index={current} query={q.query} tests={q.tests} valid={q.valid} answer={q.answer} handleAnswer={handleUserAnswer} />
+        <QuestionTest index={q.index} query={q.query} tests={q.tests} valid={q.valid} answer={q.answer} handleAnswer={handleUserAnswer} />
       }
       </div>
+      </>
     }
     {finish && 
       <div className="quiz-congratulations">
@@ -69,11 +84,20 @@ export default function Quiz() {
       }
       </div>
     }
-    <hr/>
-    <pre>{JSON.stringify(country, null, 2)}</pre>
-  </>
+    <a ref={countryMap} className="!block !mx-auto !mb-6" target="_blank">
+      Ver en Google Maps
+    </a>
+    <Paginate pages={Object.keys(questions)} active={current} handlePage={handlePage}/>
+  </div>
 }
 
+/**
+ * Get quiz questions and posible solutions for selected country (test questions)
+ * @param country 
+ * @param countries 
+ * @param num 
+ * @returns 
+ */
 function getQuestions(country: Country, countries: Country[], num: number = 10): Question[] {
 
   const queries = { // replace COUNTRY aliases
@@ -97,18 +121,18 @@ function getQuestions(country: Country, countries: Country[], num: number = 10):
 
     const field = querys[i][0] as keyof Country;
     const value = country[field];
-    const question: Question = {index: i, query: querys[i][1].replace('COUNTRY', country.name), tests: [], valid: 0, answer: null};
+    const question: Question = {index: i, query: querys[i][1].replace('COUNTRY', '<strong>'+country.name+'</strong>'), tests: [], valid: 0, answer: null};
     
      // Add 3 diferent country answer
     let q = 0;
     let alternatives: any[] = [];
     while (q < 3)
     {
-      q++;
-      let alternate = countries.find(item => (item[field] !== undefined && item[field] !== country[field] && !(alternatives.includes(item[field]))));
+      let alternate = countries.find(item => (item[field] !== undefined && item[field].length && item[field] !== country[field] && !(alternatives.includes(item[field]))));
       if (alternate !== undefined) 
       {
         alternatives.push(alternate[field]);
+        q++;
       }
       else
       {

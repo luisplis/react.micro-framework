@@ -26,10 +26,8 @@ export default function App({ children }: { children?: ReactNode }) {
         <div className="col-12 col-sm-3 col-lg-2 py-2">
           <Menu style='flex-column align-items-start'/>
         </div>
-        <div className="col-12 col-sm-9 col-lg-10">
-          <div className='main shadow-lg'>
+        <div className="col-12 col-sm-9 col-lg-10 gap-0">
             {children}
-          </div>
         </div>
       </div>
     </main>

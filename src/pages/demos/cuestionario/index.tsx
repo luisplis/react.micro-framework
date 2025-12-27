@@ -6,34 +6,29 @@ import "tailwindcss";
 
 export default function cuestionario() {
 
-  return <>
+  return <div className='main shadow-lg'>
   <h1 className="font-bold text-indigo-400">CUESTIONARIO</h1>
-  <p className='text-colorize mb-3'>
-    <strong>Referencia:</strong> &nbsp;
-    <a className="!text-link hover:!text-linked" href="https://devchallenges.io/challenge/country-quizz" target="_blank">
-      Country Quiz
-    </a>
-  </p>
   <div className='w-100 mx-auto'>
     <div className='flex flex-col md:flex-row gap-3'>
       <div className='md:w-7/12 xl:w-8/12 border'>
         <img className="w-auto" alt="preview" src="https://github.com/user-attachments/assets/c0271189-cf88-459a-8014-e09ec5fecdec" />
       </div>
       <div className='md:w-5/12 xl:w-4/12 border p-3'>
-        <h2>Componentes</h2>
-        <p>
-          <strong>Quiz</strong> <small>(maestro)</small>
+        <p className='text-colorize mb-3'>
+          <strong>Referencia:</strong> &nbsp;
+          <a className="!text-link hover:!text-linked" href="https://devchallenges.io/challenge/country-quizz" target="_blank">
+            Country Quiz
+          </a>
         </p>
-        <p className='!ms-4'>
-          <strong>Question</strong>
-          </p>
-        <p className='!ms-8'>
-          <strong>Congratulations</strong>
-        </p>
-        <p>
+        <p className='mb-3'>
           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
-            Enunciado del ejercicio
+            Abrir Enunciado
           </button>
+        </p>
+        <p className='mb-3'>
+          <a className='btn btn-secondary' href="/demos/cuestionario/Quiz" title="Iniciar el Cuestionario">
+            Iniciar el Test
+          </a>
         </p>
       </div>
     </div>
@@ -55,5 +50,5 @@ export default function cuestionario() {
       </div>
     </div>
   </div>
-</>
+</div>
 }

@@ -14,6 +14,9 @@
   --color-linked: #3355FF;
   --color-gray: #8B8EAB;
   --color-smoke: rgba(0, 0, 0, 0.5);
+  --font-text:    'Winky Sans', sans-serif;
+  --font-title:   'Raleway', sans-serif;
+  --font-display: 'REM', sans-serif;
 }
 
 /*

@@ -91,16 +91,16 @@ $display-font-sizes: (
     3: 2.88rem,
     4: 1.55rem,
     5: 1.11rem,
-    6: 0.88rem,
+    6: 0.88rem, 
 ) !default;
 
 /*
-** BS DEFAULTS
+** BS DEFAULTS CONFIGURATION
 */
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
-@import "bootstrap/scss/maps";
+@import "~bootstrap/scss/functions"; 
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/variables-dark";
+@import "~bootstrap/scss/maps";
 
 :root {
     // BS-4 compatibility var(--breakpoint-xy) -- BS-5 var(--bs-breakpoint-xy)
@@ -119,7 +119,6 @@ $colorize: (
     "transparent": $transparent
 ) !default;
 
-
 $colors: map-merge($theme-colors, $colorize);
 $theme-colors: map-merge($theme-colors, $colorize);
 $theme-colors-text: map-merge($theme-colors, $colorize);
@@ -132,11 +131,11 @@ $utilities-bg: map-merge($theme-colors, $utilities-bg);
 $utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, "$key", "bg");
 
 /*
-** BS EXTENSED
+** BS EXTENSED FUNCTIONS
 */
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/mixins/banner";
-@import "bootstrap/scss/utilities";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/mixins/banner";
+@import "~bootstrap/scss/utilities";
 
 /*
 ** GoTo: smooth scroll to anchor 
@@ -271,45 +270,40 @@ $theme-colors-border-subtle-dark: map-merge($theme-colors-border-subtle-dark, $c
 */
 @include media-breakpoint-up(xl){ .navbar-expand-xl .offcanvas .offcanvas-footer { display: none; } }
 
-// BS CONFIGURATION
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-
-// BS ALL COMPONENTS
-@import "bootstrap/scss/root";
-@import "bootstrap/scss/reboot";
-@import "bootstrap/scss/type";
-@import "bootstrap/scss/images";
-@import "bootstrap/scss/containers";
-@import "bootstrap/scss/grid";
-@import "bootstrap/scss/tables";
-@import "bootstrap/scss/forms";
-@import "bootstrap/scss/buttons";
-@import "bootstrap/scss/transitions";
-@import "bootstrap/scss/dropdown";
-@import "bootstrap/scss/button-group";
-@import "bootstrap/scss/nav";
-@import "bootstrap/scss/navbar";
-@import "bootstrap/scss/card";
-@import "bootstrap/scss/accordion";
-@import "bootstrap/scss/breadcrumb";
-@import "bootstrap/scss/pagination";
-@import "bootstrap/scss/badge";
-@import "bootstrap/scss/alert";
-@import "bootstrap/scss/progress";
-@import "bootstrap/scss/list-group";
-@import "bootstrap/scss/close";
-@import "bootstrap/scss/toasts";
-@import "bootstrap/scss/modal";
-@import "bootstrap/scss/tooltip";
-@import "bootstrap/scss/popover";
-@import "bootstrap/scss/carousel";
-@import "bootstrap/scss/spinners";
-@import "bootstrap/scss/offcanvas";
-@import "bootstrap/scss/placeholders";
+/*
+** BS LOAD COMPONENTS
+*/
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/containers";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/button-group";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/accordion";
+@import "~bootstrap/scss/breadcrumb";
+@import "~bootstrap/scss/pagination";
+@import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/alert";
+@import "~bootstrap/scss/progress";
+@import "~bootstrap/scss/list-group";
+@import "~bootstrap/scss/close";
+@import "~bootstrap/scss/toasts";
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/popover";
+@import "~bootstrap/scss/carousel";
+@import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/offcanvas";
+@import "~bootstrap/scss/placeholders";
 
 /*
 ** PositionFixed responsive: "position-lg-fixed" ++ @bootstrap-extended
@@ -356,9 +350,11 @@ $theme-colors-border-subtle-dark: map-merge($theme-colors-border-subtle-dark, $c
     }
 }
 
-// BS API HELPERS + UTILITIES
-@import "bootstrap/scss/helpers";
-@import "bootstrap/scss/utilities/api";
+/*
+** BS API HELPERS + UTILITIES
+*/
+@import "~bootstrap/scss/helpers";
+@import "~bootstrap/scss/utilities/api";
 
 /*
 ** RESET STYLES -- all in projects
@@ -370,12 +366,12 @@ body {
 header, main, footer {
     min-width: 345px;
 }
-header nav.navbar { background-image: none; }
-
-main
-{
+header nav.navbar { 
+    background-image: none; 
+}
+main {
     font-size: $font-size;
-    min-height: 85vh;
+    min-height: 80vh;
     a, .link { text-decoration: $link-decoration; }
 }
 

@@ -5,7 +5,7 @@ export const menu = 1;
 
 export default function index() {
 
-  return <>
+  return <div className="main shadow-lg">
     <Markdown file={fullstack}/>
-  </>
+  </div>
 }
