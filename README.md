@@ -28,16 +28,16 @@ git clone https://github.com/luisplis/react.micro-framework
 ### Estructura **app** y navegación **web**
 
 - **doc** -- Documentación Técnica (how-to)
-  ++ ···
+-- ···
 - **public** -- Ficheros Públicos (.htaccess)
-  ++ ···
+-- ···
 - **src** -- Aplicación Web (layout)
-    +++ ···
-  ++ assets
-  ++ **pages** -- Navegación Web (páginas)
-    +++ ···
-  ++ **slots** -- Componentes Esenciales (slots)
-    +++ ···
+-- ···
+-- assets
+---- **pages** -- Navegación Web (páginas)
+------ ···
+---- **slots** -- Componentes Esenciales (slots)
+------ ···
 
 > Para la navegación por sistema de ficheros equivalente a páginas seguiremos las siguientes reglas:
 
